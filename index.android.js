@@ -63,6 +63,11 @@ ${1 + 2}
   }
 }
 
+/**
+ * 设置字体的相关博客
+ * https://my.oschina.net/zx0211/blog/644318
+ * http://www.jianshu.com/p/96d5c66791c3
+ */
 //修改Text的render方法，达到修改所有Text字体的目的
 import _ from 'lodash'
 // _.wrap是lodash的一个函数,用来包裹传入的函数，然后返回一个新的函数 
@@ -100,6 +105,10 @@ const styles = StyleSheet.create({
 });
 
 import myListView from './mytest/testListView'
+import myTestFetch from './mytest/testFetch'
+import myXin from './mytest/testXin'
+import myScrollView from './mytest/testScrollView'//仿viewpager
+import myScrollView2 from './mytest/testScrollView2'//双指缩放
 
 // AppRegistry.registerComponent('NightNative', () => NightNative);
-AppRegistry.registerComponent('NightNative', () => myListView);
+AppRegistry.registerComponent('NightNative', () => myScrollView2);
