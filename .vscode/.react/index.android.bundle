@@ -90360,6 +90360,7 @@ var _reactNative=require(42 /* react-native */);
 
 
 
+
 var CustomLayoutAnimation={
 duration:800,
 create:{
@@ -90375,14 +90376,7 @@ type:_reactNative.LayoutAnimation.Types.easeInEaseOut}};var
 TestScrollView=function(_Component){babelHelpers.inherits(TestScrollView,_Component);
 
 function TestScrollView(props){babelHelpers.classCallCheck(this,TestScrollView);var _this=babelHelpers.possibleConstructorReturn(this,(TestScrollView.__proto__||Object.getPrototypeOf(TestScrollView)).call(this,
-props));
-var initList=[];
-for(var i=20;i>0;i--){
-initList.push(i);
-}
-_this.state={
-num:10,
-dataList:initList};return _this;
+props));_this.
 
 
 
@@ -90396,40 +90390,68 @@ dataList:initList};return _this;
 
 
 
-}babelHelpers.createClass(TestScrollView,[{key:'componentWillUpdate',value:function componentWillUpdate()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+maxzIndex=1;var initList=[];for(var i=0;i<1;i++){initList.push(i);}var boxSize=_reactNative.Dimensions.get('window').width/3;var eleList=initList.map(function(v,i){console.info(v,i);return{data:v,marginLeft:new _reactNative.Animated.Value(i%3*boxSize),marginTop:new _reactNative.Animated.Value(Math.floor(i/3)*boxSize),zIndex:0,index:i};});_this.state={num:10,dataList:eleList,scrollEnabled:true,bounceValue:new _reactNative.Animated.Value(0)};return _this;}babelHelpers.createClass(TestScrollView,[{key:'componentWillUpdate',value:function componentWillUpdate(){console.log('componentWillUpdate...');_reactNative.LayoutAnimation.easeInEaseOut();}},{key:'componentDidMount',value:function componentDidMount()
+
+
+
 {
-console.log('componentWillUpdate...');
-_reactNative.LayoutAnimation.easeInEaseOut();
+this.state.bounceValue.setValue(1.5);
+_reactNative.Animated.spring(
+this.state.bounceValue,
+{
+toValue:0.8,
+friction:1}).
 
-
+start();
 }},{key:'render',value:function render()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{
-var items=[];
+{var _this2=this;
 var boxSize=_reactNative.Dimensions.get('window').width/3;
-console.info(boxSize);
-for(var i=0;i<this.state.dataList.length;i++){
-items.push(
-_react2.default.createElement(_reactNative.Text,{key:i,style:[myStyles.box,{
-position:'absolute',
-marginLeft:i%3*boxSize,
-marginTop:Math.floor(i/3)*boxSize}]},
-
-this.state.dataList[i]));
+var items=[];
+items=this.state.dataList.map(function(d){
+return(
+_react2.default.createElement(_reactNative.Animated.View,{
 
 
 
@@ -90437,11 +90459,112 @@ this.state.dataList[i]));
 
 
 
+
+
+
+
+
+
+style:{
+flex:1,
+transform:[
+{scale:_this2.state.bounceValue}]},
+
+
+key:d.data,
+onStartShouldSetResponder:function onStartShouldSetResponder(evt){
+console.info("onStartShouldSetResponder");
+return true;
+},
+onResponderGrant:function onResponderGrant(evt){
+console.info('onResponderGrant');
+d.zIndex=_this2.maxzIndex++;
+_this2.setState({scrollEnabled:false});
+},
+onResponderMove:function onResponderMove(evt){
+
+var newLeft=evt.nativeEvent.pageX-evt.nativeEvent.locationX;
+var newTop=evt.nativeEvent.pageY-evt.nativeEvent.locationY;
+
+
+
+
+
+
+
+
+
+
+
+var selfIndex=d.index;
+var currentIndex=Math.floor((newTop+boxSize/2)/boxSize)*3+Math.floor((newLeft+boxSize/2)/boxSize);
+console.info(selfIndex,currentIndex);
+d.marginLeft=newLeft;
+d.marginTop=newTop;
+var dataList=_this2.state.dataList;
+var findNodeByIndex=function findNodeByIndex(index){
+for(var i=0;i<dataList.length;i++){
+if(dataList[i].index==index){
+return dataList[i];
 }
+}
+};
+if(currentIndex>selfIndex){
+for(var i=selfIndex+1;i<=currentIndex;i++){
+var newIndex=i-1;
+
+var moveNode=findNodeByIndex(i);
+moveNode.index=newIndex;
+moveNode.marginLeft=newIndex%3*boxSize;
+moveNode.marginTop=Math.floor(newIndex/3)*boxSize;
+}
+d.index=currentIndex;
+}
+if(currentIndex<selfIndex){
+for(var _i=selfIndex-1;_i>=currentIndex;_i--){
+var _newIndex=_i+1;
+
+var _moveNode=findNodeByIndex(_i);
+_moveNode.index=_newIndex;
+_moveNode.marginLeft=_newIndex%3*boxSize;
+_moveNode.marginTop=Math.floor(_newIndex/3)*boxSize;
+}
+d.index=currentIndex;
+}
+
+
+
+
+_this2.setState({dataList:dataList});
+},
+onResponderRelease:function onResponderRelease(evt){
+console.info('onResponderRelease');
+_this2.setState({scrollEnabled:true});
+},
+onResponderTerminationRequest:function onResponderTerminationRequest(evt){
+console.info('onResponderTerminationRequest');
+return true;
+},
+onResponderTerminate:function onResponderTerminate(evt){
+console.info('onResponderTerminate');
+}},
+
+
+_react2.default.createElement(_reactNative.Text,{key:d.data,style:myStyles.text},
+d.data,' - ',d.index)));
+
+
+
+});
 var listHeight=Math.ceil(this.state.dataList.length/3)*boxSize;
 
+
 return(
-_react2.default.createElement(_reactNative.ScrollView,null,
+
+
+
+
+
 
 _react2.default.createElement(_reactNative.View,{
 style:{
@@ -90450,7 +90573,7 @@ flexWrap:'wrap',
 height:listHeight}},
 
 
-items)));
+items));
 
 
 
@@ -90459,12 +90582,14 @@ items)));
 
 
 var myStyles=_reactNative.StyleSheet.create({
-box:{
+text:{
+color:"#ff0000",
+fontSize:30},
 
+box:{
 width:_reactNative.Dimensions.get('window').width/3,
 height:_reactNative.Dimensions.get('window').width/3,
-color:"#ff0000",
-fontSize:30}});exports.default=
+backgroundColor:'#99ff9988'}});exports.default=
 
 
 
