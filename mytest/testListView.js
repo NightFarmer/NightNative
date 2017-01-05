@@ -36,7 +36,7 @@ export default class TestList extends Component {
                 style={{
                     height: 50,
                     fontSize: 30,
-                    fontFamily: 'xmlt',
+                    // fontFamily: 'xmlt',
                     color: '#FF0000'
                 }}
                 >{rowData}测试字体</Text>

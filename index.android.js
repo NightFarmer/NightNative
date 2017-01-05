@@ -63,8 +63,23 @@ ${1 + 2}
   }
 }
 
+//修改Text的render方法，达到修改所有Text字体的目的
+import _ from 'lodash'
+// _.wrap是lodash的一个函数,用来包裹传入的函数，然后返回一个新的函数 
+Text.prototype.render = _.wrap(Text.prototype.render, function (func, ...args) {
+  let originText = func.apply(this, args);
+  return React.cloneElement(originText, {
+    style: [
+      originText.props.style,
+      styles.defaultFontFamily
+    ]
+  });
+});
 
 const styles = StyleSheet.create({
+  defaultFontFamily: {
+    fontFamily: 'xmlt'
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
