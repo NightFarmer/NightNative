@@ -42,6 +42,7 @@ export default class MainFunctionGrid extends Component {
         return (
             <ScrollView
                 scrollEnabled={this.state.scrollEnabled}
+                style={this.props.style}
                 >
                 <View
                     style={{
@@ -107,46 +108,53 @@ export default class MainFunctionGrid extends Component {
         ]).start();
     }
 
+    _setNodeDragTimer(node) {
+        node.touchTimer = setTimeout(() => {
+            node.moveable = true
+            node.zIndex = this.maxzIndex++
+            this.setState({ scrollEnabled: false });
+            // vibrate(100)
+            if (this.props.onDragStart) {
+                this.props.onDragStart()
+            }
+        }, 500);
+    }
+
+    _clearNodeDragTimer(node) {
+        if (node.touchTimer) {
+            clearTimeout(node.touchTimer)
+        }
+        this.setState({ scrollEnabled: true });
+        if (this.props.onDragEnd) {
+            this.props.onDragEnd()
+        }
+    }
+
     newPanResponder(node) {
         return PanResponder.create({
             // 要求成为响应者：
             onStartShouldSetPanResponder: (evt, gestureState) => {
                 // console.info('onStartShouldSetPanResponder')
                 if (gestureState.numberActiveTouches <= 1) {
-                    node.touchTimer = setTimeout(() => {
-                        node.moveable = true
-                        node.zIndex = this.maxzIndex++
-                        this.setState({ scrollEnabled: false });
-                        // vibrate(100)
-                    }, 500);
+                    this._setNodeDragTimer(node)
                 }
                 return false
             },
             onStartShouldSetPanResponderCapture: (evt, gestureState) => {
                 // console.info('onStartShouldSetPanResponderCapture')
                 if (gestureState.numberActiveTouches <= 1) {
-                    node.touchTimer = setTimeout(() => {
-                        node.moveable = true
-                        node.zIndex = this.maxzIndex++
-                        this.setState({ scrollEnabled: false });
-                    }, 700);
+                    this._setNodeDragTimer(node)
                 }
                 return false
             },
             onMoveShouldSetPanResponder: (evt, gestureState) => {
                 // console.info('onMoveShouldSetPanResponder')
-                if (node.touchTimer) {
-                    clearTimeout(node.touchTimer)
-                    this.setState({ scrollEnabled: true });
-                }
+                this._clearNodeDragTimer(node)
                 return node.moveable
             },
             onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
                 // console.info('onMoveShouldSetPanResponderCapture')
-                if (node.touchTimer) {
-                    clearTimeout(node.touchTimer)
-                    this.setState({ scrollEnabled: true });
-                }
+                this._clearNodeDragTimer(node)
                 return node.moveable
             },
 
@@ -197,10 +205,7 @@ export default class MainFunctionGrid extends Component {
                 // 用户放开了所有的触摸点，且此时视图已经成为了响应者。
                 // 一般来说这意味着一个手势操作已经成功完成。
                 node.moveable = false
-                if (node.touchTimer) {
-                    clearTimeout(node.touchTimer)
-                }
-                this.setState({ scrollEnabled: true });
+                this._clearNodeDragTimer(node)
                 node.moveX = 0;
                 node.moveY = 0;
                 this._setMarginWithAnim(node, 200)
@@ -208,10 +213,7 @@ export default class MainFunctionGrid extends Component {
             onPanResponderTerminate: (evt, gestureState) => {
                 // 另一个组件已经成为了新的响应者，所以当前手势将被取消。
                 node.moveable = false
-                if (node.touchTimer) {
-                    clearTimeout(node.touchTimer)
-                }
-                this.setState({ scrollEnabled: true });
+                this._clearNodeDragTimer(node)
                 node.moveX = 0;
                 node.moveY = 0;
                 this._setMarginWithAnim(node, 200)
