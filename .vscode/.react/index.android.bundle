@@ -1702,7 +1702,7 @@ var _testXin=require(560 /* ./mytest/testXin */);var _testXin2=babelHelpers.inte
 var _testScrollView=require(561 /* ./mytest/testScrollView */);var _testScrollView2=babelHelpers.interopRequireDefault(_testScrollView);
 var _testScrollView3=require(562 /* ./mytest/testScrollView2 */);var _testScrollView4=babelHelpers.interopRequireDefault(_testScrollView3);
 var _MainFunctionGrid=require(563 /* ./common/MainFunctionGrid */);var _MainFunctionGrid2=babelHelpers.interopRequireDefault(_MainFunctionGrid);
-var _MainPage=require(564 /* ./common/MainPage */);var _MainPage2=babelHelpers.interopRequireDefault(_MainPage);var NightNative=function(_Component){babelHelpers.inherits(NightNative,_Component);function NightNative(props){babelHelpers.classCallCheck(this,NightNative);var _this=babelHelpers.possibleConstructorReturn(this,(NightNative.__proto__||Object.getPrototypeOf(NightNative)).call(this,props));_this.state={showText:true,myTest:'default'};setInterval(function(){_this.setState({showText:!_this.state.showText});},1000);return _this;}babelHelpers.createClass(NightNative,[{key:'render',value:function render(){var _this2=this;return _react2.default.createElement(_reactNative.View,{style:styles.container},_react2.default.createElement(_reactNative.Text,{style:styles.welcome},'Welcome to React Native!2'),_react2.default.createElement(_reactNative.Text,{style:styles.instructions},'To get started, edit index.android.js'),_react2.default.createElement(_reactNative.Text,{style:styles.instructions},'Double tap R on your keyboard to reload,','\n','Shake or press menu button for dev menu'),_react2.default.createElement(_reactNative.Text,null,'\u591A\u884C\u7684\n'+(1+2)+'\n\u5B57\u7B26\u4E32\n          \'\u5F15\u53F7\',  `\u53CD\u5F15\u53F7`, '+"hehe".length+'\n'),_react2.default.createElement(_reactNative.Text,null,'\u591A\u884C\u7684',1+3,'\u5B57\u7B26\u4E32 ',this.state.myTest),_react2.default.createElement(_reactNative.Text,null,'123',''+this.state.showText),_react2.default.createElement(_testFlex2.default,null),_react2.default.createElement(_reactNative.TextInput,{style:{alignSelf:'stretch'},placeholder:'yooooo',onChangeText:function onChangeText(text){_this2.setState({myTest:text});}}));}}]);return NightNative;}(_react.Component);exports.default=NightNative;_reactNative.Text.prototype.render=_lodash2.default.wrap(_reactNative.Text.prototype.render,function(func){for(var _len=arguments.length,args=Array(_len>1?_len-1:0),_key=1;_key<_len;_key++){args[_key-1]=arguments[_key];}var originText=func.apply(this,args);return _react2.default.cloneElement(originText,{style:[originText.props.style,styles.defaultFontFamily]});});var styles=_reactNative.StyleSheet.create({defaultFontFamily:{fontFamily:'xmlt'},container:{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'#F5FCFF'},welcome:{fontSize:20,color:"#FF0000",textAlign:'center',margin:10},instructions:{textAlign:'center',color:'#333333',marginBottom:5}});
+var _MainPage=require(565 /* ./common/MainPage */);var _MainPage2=babelHelpers.interopRequireDefault(_MainPage);var NightNative=function(_Component){babelHelpers.inherits(NightNative,_Component);function NightNative(props){babelHelpers.classCallCheck(this,NightNative);var _this=babelHelpers.possibleConstructorReturn(this,(NightNative.__proto__||Object.getPrototypeOf(NightNative)).call(this,props));_this.state={showText:true,myTest:'default'};setInterval(function(){_this.setState({showText:!_this.state.showText});},1000);return _this;}babelHelpers.createClass(NightNative,[{key:'render',value:function render(){var _this2=this;return _react2.default.createElement(_reactNative.View,{style:styles.container},_react2.default.createElement(_reactNative.Text,{style:styles.welcome},'Welcome to React Native!2'),_react2.default.createElement(_reactNative.Text,{style:styles.instructions},'To get started, edit index.android.js'),_react2.default.createElement(_reactNative.Text,{style:styles.instructions},'Double tap R on your keyboard to reload,','\n','Shake or press menu button for dev menu'),_react2.default.createElement(_reactNative.Text,null,'\u591A\u884C\u7684\n'+(1+2)+'\n\u5B57\u7B26\u4E32\n          \'\u5F15\u53F7\',  `\u53CD\u5F15\u53F7`, '+"hehe".length+'\n'),_react2.default.createElement(_reactNative.Text,null,'\u591A\u884C\u7684',1+3,'\u5B57\u7B26\u4E32 ',this.state.myTest),_react2.default.createElement(_reactNative.Text,null,'123',''+this.state.showText),_react2.default.createElement(_testFlex2.default,null),_react2.default.createElement(_reactNative.TextInput,{style:{alignSelf:'stretch'},placeholder:'yooooo',onChangeText:function onChangeText(text){_this2.setState({myTest:text});}}));}}]);return NightNative;}(_react.Component);exports.default=NightNative;_reactNative.Text.prototype.render=_lodash2.default.wrap(_reactNative.Text.prototype.render,function(func){for(var _len=arguments.length,args=Array(_len>1?_len-1:0),_key=1;_key<_len;_key++){args[_key-1]=arguments[_key];}var originText=func.apply(this,args);return _react2.default.cloneElement(originText,{style:[originText.props.style,styles.defaultFontFamily]});});var styles=_reactNative.StyleSheet.create({defaultFontFamily:{fontFamily:'xmlt'},container:{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'#F5FCFF'},welcome:{fontSize:20,color:"#FF0000",textAlign:'center',margin:10},instructions:{textAlign:'center',color:'#333333',marginBottom:5}});
 
 
 _reactNative.AppRegistry.registerComponent('NightNative',function(){return _MainPage2.default;});
@@ -90655,6 +90655,69 @@ var _reactNative=require(42 /* react-native */);
 
 
 
+var _DraggableGridView=require(564 /* ./main/DraggableGridView */);var _DraggableGridView2=babelHelpers.interopRequireDefault(_DraggableGridView);var
+
+MainFunctionGrid=function(_Component){babelHelpers.inherits(MainFunctionGrid,_Component);
+
+function MainFunctionGrid(props){babelHelpers.classCallCheck(this,MainFunctionGrid);var _this=babelHelpers.possibleConstructorReturn(this,(MainFunctionGrid.__proto__||Object.getPrototypeOf(MainFunctionGrid)).call(this,
+props));
+_this.state={};return _this;
+
+}babelHelpers.createClass(MainFunctionGrid,[{key:'render',value:function render()
+
+{
+return(
+_react2.default.createElement(_DraggableGridView2.default,{
+renderItem:function renderItem(itemData,index){return(
+_react2.default.createElement(_reactNative.TouchableOpacity,{
+style:{
+flex:1,
+justifyContent:'center'},
+
+onPress:function onPress(){
+console.info('onclick..'+itemData);
+}},
+_react2.default.createElement(_reactNative.View,{
+style:{
+flex:1,
+backgroundColor:"#AAFF0088",
+alignSelf:'stretch',
+alignItems:'center',
+justifyContent:'center'}},
+
+
+_react2.default.createElement(_reactNative.Text,{key:itemData,style:myStyles.text},
+itemData,' - ',index))));}}));
+
+
+
+
+
+
+
+}}]);return MainFunctionGrid;}(_react.Component);exports.default=MainFunctionGrid;
+
+
+var myStyles=_reactNative.StyleSheet.create({
+text:{
+color:"#ff0000",
+fontSize:30},
+
+box:{
+width:_reactNative.Dimensions.get('window').width/3,
+height:_reactNative.Dimensions.get('window').width/3,
+backgroundColor:'#00000000',
+position:'absolute'}});
+}, 563, null, "NightNative/common/MainFunctionGrid.js");
+__d(/* NightNative/common/main/DraggableGridView.js */function(global, require, module, exports) {Object.defineProperty(exports,"__esModule",{value:true});var _react=require(12 /* react */);var _react2=babelHelpers.interopRequireDefault(_react);
+var _reactNative=require(42 /* react-native */);
+
+
+
+
+
+
+
 
 
 
@@ -90681,19 +90744,14 @@ marginTopStatic:Math.floor(i/3)*boxSize,
 moveX:0,
 moveY:0,
 zIndex:0,
-index:i,
-onClick:_this.onItemClick};
+index:i};
 
 });
 _this.state={
 dataList:eleList,
 scrollEnabled:true};return _this;
 
-}babelHelpers.createClass(MainFunctionGrid,[{key:'onItemClick',value:function onItemClick(
-
-node){
-console.info(node.data);
-}},{key:'render',value:function render()
+}babelHelpers.createClass(MainFunctionGrid,[{key:'render',value:function render()
 
 {
 return(
@@ -90728,29 +90786,7 @@ marginTop:d.marginTop}],
 key:d.data},
 _this2.newPanResponder(d).panHandlers),
 
-
-_react2.default.createElement(_reactNative.TouchableOpacity,{
-style:{
-flex:1,
-justifyContent:'center'},
-
-onPress:function onPress(){
-console.info('onclick..');
-}},
-_react2.default.createElement(_reactNative.View,{
-style:{
-flex:1,
-backgroundColor:"#AAFF0088",
-alignSelf:'stretch',
-alignItems:'center',
-justifyContent:'center'}},
-
-
-_react2.default.createElement(_reactNative.Text,{key:d.data,style:myStyles.text},
-d.data,' - ',d.index)))));
-
-
-
+_this2.props.renderItem(d.data,d.index)));
 
 
 });
@@ -90796,7 +90832,8 @@ node.touchTimer=setTimeout(function(){
 node.moveable=true;
 node.zIndex=_this3.maxzIndex++;
 _this3.setState({scrollEnabled:false});
-},700);
+
+},500);
 }
 return false;
 },
@@ -90838,9 +90875,6 @@ onPanResponderMove:function onPanResponderMove(evt,gestureState){
 
 
 
-console.info("onPanResponderMove"+gestureState.y0);
-
-
 node.moveX+=gestureState.dx;
 node.moveY+=gestureState.dy;
 var newLeft=node.marginLeftStatic+node.moveX;
@@ -90877,11 +90911,6 @@ onPanResponderTerminationRequest:function onPanResponderTerminationRequest(evt,g
 onPanResponderRelease:function onPanResponderRelease(evt,gestureState){
 
 
-
-
-
-
-
 node.moveable=false;
 if(node.touchTimer){
 clearTimeout(node.touchTimer);
@@ -90911,9 +90940,9 @@ fontSize:30},
 box:{
 width:_reactNative.Dimensions.get('window').width/3,
 height:_reactNative.Dimensions.get('window').width/3,
-backgroundColor:'#00000000',
+backgroundColor:'#0000FF44',
 position:'absolute'}});
-}, 563, null, "NightNative/common/MainFunctionGrid.js");
+}, 564, null, "NightNative/common/main/DraggableGridView.js");
 __d(/* NightNative/common/MainPage.js */function(global, require, module, exports) {Object.defineProperty(exports,"__esModule",{value:true});var _react=require(12 /* react */);var _react2=babelHelpers.interopRequireDefault(_react);
 var _reactNative=require(42 /* react-native */);
 
@@ -90942,7 +90971,7 @@ _react2.default.createElement(_reactNative.Text,null,'123'))));
 
 
 }}]);return MainPage;}(_react.Component);exports.default=MainPage;
-}, 564, null, "NightNative/common/MainPage.js");
+}, 565, null, "NightNative/common/MainPage.js");
 ;require(192);
 ;require(0);
 //# sourceMappingURL=index.android.map
