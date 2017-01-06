@@ -1700,10 +1700,12 @@ var _testListView=require(558 /* ./mytest/testListView */);var _testListView2=ba
 var _testFetch=require(559 /* ./mytest/testFetch */);var _testFetch2=babelHelpers.interopRequireDefault(_testFetch);
 var _testXin=require(560 /* ./mytest/testXin */);var _testXin2=babelHelpers.interopRequireDefault(_testXin);
 var _testScrollView=require(561 /* ./mytest/testScrollView */);var _testScrollView2=babelHelpers.interopRequireDefault(_testScrollView);
-var _testScrollView3=require(562 /* ./mytest/testScrollView2 */);var _testScrollView4=babelHelpers.interopRequireDefault(_testScrollView3);var NightNative=function(_Component){babelHelpers.inherits(NightNative,_Component);function NightNative(props){babelHelpers.classCallCheck(this,NightNative);var _this=babelHelpers.possibleConstructorReturn(this,(NightNative.__proto__||Object.getPrototypeOf(NightNative)).call(this,props));_this.state={showText:true,myTest:'default'};setInterval(function(){_this.setState({showText:!_this.state.showText});},1000);return _this;}babelHelpers.createClass(NightNative,[{key:'render',value:function render(){var _this2=this;return _react2.default.createElement(_reactNative.View,{style:styles.container},_react2.default.createElement(_reactNative.Text,{style:styles.welcome},'Welcome to React Native!2'),_react2.default.createElement(_reactNative.Text,{style:styles.instructions},'To get started, edit index.android.js'),_react2.default.createElement(_reactNative.Text,{style:styles.instructions},'Double tap R on your keyboard to reload,','\n','Shake or press menu button for dev menu'),_react2.default.createElement(_reactNative.Text,null,'\u591A\u884C\u7684\n'+(1+2)+'\n\u5B57\u7B26\u4E32\n          \'\u5F15\u53F7\',  `\u53CD\u5F15\u53F7`, '+"hehe".length+'\n'),_react2.default.createElement(_reactNative.Text,null,'\u591A\u884C\u7684',1+3,'\u5B57\u7B26\u4E32 ',this.state.myTest),_react2.default.createElement(_reactNative.Text,null,'123',''+this.state.showText),_react2.default.createElement(_testFlex2.default,null),_react2.default.createElement(_reactNative.TextInput,{style:{alignSelf:'stretch'},placeholder:'yooooo',onChangeText:function onChangeText(text){_this2.setState({myTest:text});}}));}}]);return NightNative;}(_react.Component);exports.default=NightNative;_reactNative.Text.prototype.render=_lodash2.default.wrap(_reactNative.Text.prototype.render,function(func){for(var _len=arguments.length,args=Array(_len>1?_len-1:0),_key=1;_key<_len;_key++){args[_key-1]=arguments[_key];}var originText=func.apply(this,args);return _react2.default.cloneElement(originText,{style:[originText.props.style,styles.defaultFontFamily]});});var styles=_reactNative.StyleSheet.create({defaultFontFamily:{fontFamily:'xmlt'},container:{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'#F5FCFF'},welcome:{fontSize:20,color:"#FF0000",textAlign:'center',margin:10},instructions:{textAlign:'center',color:'#333333',marginBottom:5}});
+var _testScrollView3=require(562 /* ./mytest/testScrollView2 */);var _testScrollView4=babelHelpers.interopRequireDefault(_testScrollView3);
+var _MainFunctionGrid=require(563 /* ./common/MainFunctionGrid */);var _MainFunctionGrid2=babelHelpers.interopRequireDefault(_MainFunctionGrid);
+var _MainPage=require(564 /* ./common/MainPage */);var _MainPage2=babelHelpers.interopRequireDefault(_MainPage);var NightNative=function(_Component){babelHelpers.inherits(NightNative,_Component);function NightNative(props){babelHelpers.classCallCheck(this,NightNative);var _this=babelHelpers.possibleConstructorReturn(this,(NightNative.__proto__||Object.getPrototypeOf(NightNative)).call(this,props));_this.state={showText:true,myTest:'default'};setInterval(function(){_this.setState({showText:!_this.state.showText});},1000);return _this;}babelHelpers.createClass(NightNative,[{key:'render',value:function render(){var _this2=this;return _react2.default.createElement(_reactNative.View,{style:styles.container},_react2.default.createElement(_reactNative.Text,{style:styles.welcome},'Welcome to React Native!2'),_react2.default.createElement(_reactNative.Text,{style:styles.instructions},'To get started, edit index.android.js'),_react2.default.createElement(_reactNative.Text,{style:styles.instructions},'Double tap R on your keyboard to reload,','\n','Shake or press menu button for dev menu'),_react2.default.createElement(_reactNative.Text,null,'\u591A\u884C\u7684\n'+(1+2)+'\n\u5B57\u7B26\u4E32\n          \'\u5F15\u53F7\',  `\u53CD\u5F15\u53F7`, '+"hehe".length+'\n'),_react2.default.createElement(_reactNative.Text,null,'\u591A\u884C\u7684',1+3,'\u5B57\u7B26\u4E32 ',this.state.myTest),_react2.default.createElement(_reactNative.Text,null,'123',''+this.state.showText),_react2.default.createElement(_testFlex2.default,null),_react2.default.createElement(_reactNative.TextInput,{style:{alignSelf:'stretch'},placeholder:'yooooo',onChangeText:function onChangeText(text){_this2.setState({myTest:text});}}));}}]);return NightNative;}(_react.Component);exports.default=NightNative;_reactNative.Text.prototype.render=_lodash2.default.wrap(_reactNative.Text.prototype.render,function(func){for(var _len=arguments.length,args=Array(_len>1?_len-1:0),_key=1;_key<_len;_key++){args[_key-1]=arguments[_key];}var originText=func.apply(this,args);return _react2.default.cloneElement(originText,{style:[originText.props.style,styles.defaultFontFamily]});});var styles=_reactNative.StyleSheet.create({defaultFontFamily:{fontFamily:'xmlt'},container:{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'#F5FCFF'},welcome:{fontSize:20,color:"#FF0000",textAlign:'center',margin:10},instructions:{textAlign:'center',color:'#333333',marginBottom:5}});
 
 
-_reactNative.AppRegistry.registerComponent('NightNative',function(){return _testScrollView4.default;});
+_reactNative.AppRegistry.registerComponent('NightNative',function(){return _MainPage2.default;});
 }, 0, null, "NightNative/index.android.js");
 __d(/* react/react.js */function(global, require, module, exports) {'use strict';
 
@@ -90431,19 +90433,22 @@ props));_this.
 
 
 
-maxzIndex=1;var initList=[];for(var i=0;i<1;i++){initList.push(i);}var boxSize=_reactNative.Dimensions.get('window').width/3;var eleList=initList.map(function(v,i){console.info(v,i);return{data:v,marginLeft:new _reactNative.Animated.Value(i%3*boxSize),marginTop:new _reactNative.Animated.Value(Math.floor(i/3)*boxSize),zIndex:0,index:i};});_this.state={num:10,dataList:eleList,scrollEnabled:true,bounceValue:new _reactNative.Animated.Value(0)};return _this;}babelHelpers.createClass(TestScrollView,[{key:'componentWillUpdate',value:function componentWillUpdate(){console.log('componentWillUpdate...');_reactNative.LayoutAnimation.easeInEaseOut();}},{key:'componentDidMount',value:function componentDidMount()
+
+maxzIndex=1;var initList=[];for(var i=0;i<20;i++){initList.push(i);}var boxSize=_reactNative.Dimensions.get('window').width/3;var eleList=initList.map(function(v,i){console.info(v,i);return{data:v,marginLeft:new _reactNative.Animated.Value(i%3*boxSize),marginTop:new _reactNative.Animated.Value(Math.floor(i/3)*boxSize),zIndex:0,index:i};});_this.state={num:10,dataList:eleList,scrollEnabled:true,bounceValue:new _reactNative.Animated.Value(0),pan:new _reactNative.Animated.ValueXY()};return _this;}babelHelpers.createClass(TestScrollView,[{key:'componentWillUpdate',value:function componentWillUpdate(){console.log('componentWillUpdate...');_reactNative.LayoutAnimation.easeInEaseOut();}},{key:'componentDidMount',value:function componentDidMount()
 
 
 
 {
-this.state.bounceValue.setValue(1.5);
-_reactNative.Animated.spring(
-this.state.bounceValue,
-{
-toValue:0.8,
-friction:1}).
 
-start();
+
+
+
+
+
+
+
+
+
 }},{key:'render',value:function render()
 
 {var _this2=this;
@@ -90452,23 +90457,17 @@ var items=[];
 items=this.state.dataList.map(function(d){
 return(
 _react2.default.createElement(_reactNative.Animated.View,{
+style:[myStyles.box,{
+position:'absolute',
+
+
+zIndex:d.zIndex,
 
 
 
 
-
-
-
-
-
-
-
-
-
-style:{
-flex:1,
-transform:[
-{scale:_this2.state.bounceValue}]},
+marginLeft:d.marginLeft,
+marginTop:d.marginTop}],
 
 
 key:d.data,
@@ -90499,8 +90498,8 @@ var newTop=evt.nativeEvent.pageY-evt.nativeEvent.locationY;
 var selfIndex=d.index;
 var currentIndex=Math.floor((newTop+boxSize/2)/boxSize)*3+Math.floor((newLeft+boxSize/2)/boxSize);
 console.info(selfIndex,currentIndex);
-d.marginLeft=newLeft;
-d.marginTop=newTop;
+d.marginLeft.setValue(newLeft);
+d.marginTop.setValue(newTop);
 var dataList=_this2.state.dataList;
 var findNodeByIndex=function findNodeByIndex(index){
 for(var i=0;i<dataList.length;i++){
@@ -90515,8 +90514,22 @@ var newIndex=i-1;
 
 var moveNode=findNodeByIndex(i);
 moveNode.index=newIndex;
-moveNode.marginLeft=newIndex%3*boxSize;
-moveNode.marginTop=Math.floor(newIndex/3)*boxSize;
+_reactNative.Animated.timing(
+moveNode.marginLeft,
+{
+toValue:newIndex%3*boxSize,
+duration:250}).
+
+start();
+_reactNative.Animated.timing(
+moveNode.marginTop,
+{
+toValue:Math.floor(newIndex/3)*boxSize,
+duration:250}).
+
+start();
+
+
 }
 d.index=currentIndex;
 }
@@ -90526,8 +90539,30 @@ var _newIndex=_i+1;
 
 var _moveNode=findNodeByIndex(_i);
 _moveNode.index=_newIndex;
-_moveNode.marginLeft=_newIndex%3*boxSize;
-_moveNode.marginTop=Math.floor(_newIndex/3)*boxSize;
+
+
+_reactNative.Animated.timing(
+_moveNode.marginLeft,
+{
+toValue:_newIndex%3*boxSize,
+duration:250}).
+
+start();
+_reactNative.Animated.timing(
+_moveNode.marginTop,
+{
+toValue:Math.floor(_newIndex/3)*boxSize,
+duration:250}).
+
+start();
+
+
+
+
+
+
+
+
 }
 d.index=currentIndex;
 }
@@ -90540,6 +90575,22 @@ _this2.setState({dataList:dataList});
 onResponderRelease:function onResponderRelease(evt){
 console.info('onResponderRelease');
 _this2.setState({scrollEnabled:true});
+
+var newIndex=d.index;
+_reactNative.Animated.timing(
+d.marginLeft,
+{
+toValue:newIndex%3*boxSize,
+duration:200}).
+
+start();
+_reactNative.Animated.timing(
+d.marginTop,
+{
+toValue:Math.floor(newIndex/3)*boxSize,
+duration:300}).
+
+start();
 },
 onResponderTerminationRequest:function onResponderTerminationRequest(evt){
 console.info('onResponderTerminationRequest');
@@ -90560,8 +90611,8 @@ var listHeight=Math.ceil(this.state.dataList.length/3)*boxSize;
 
 
 return(
-
-
+_react2.default.createElement(_reactNative.ScrollView,{
+scrollEnabled:this.state.scrollEnabled},
 
 
 
@@ -90573,7 +90624,7 @@ flexWrap:'wrap',
 height:listHeight}},
 
 
-items));
+items)));
 
 
 
@@ -90595,6 +90646,313 @@ backgroundColor:'#99ff9988'}});exports.default=
 
 TestScrollView;
 }, 562, null, "NightNative/mytest/testScrollView2.js");
+__d(/* NightNative/common/MainFunctionGrid.js */function(global, require, module, exports) {Object.defineProperty(exports,"__esModule",{value:true});var _react=require(12 /* react */);var _react2=babelHelpers.interopRequireDefault(_react);
+var _reactNative=require(42 /* react-native */);
+
+
+
+
+
+
+
+
+
+
+var boxSize=_reactNative.Dimensions.get('window').width/3;var
+
+MainFunctionGrid=function(_Component){babelHelpers.inherits(MainFunctionGrid,_Component);
+
+
+function MainFunctionGrid(props){babelHelpers.classCallCheck(this,MainFunctionGrid);var _this=babelHelpers.possibleConstructorReturn(this,(MainFunctionGrid.__proto__||Object.getPrototypeOf(MainFunctionGrid)).call(this,
+props));_this.maxzIndex=1;_this.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+evtY=0;_this.
+evtX=0;var initList=[];for(var i=0;i<20;i++){initList.push(i);}var eleList=initList.map(function(v,i){console.info(v,i);return{data:v,marginLeft:new _reactNative.Animated.Value(i%3*boxSize),marginTop:new _reactNative.Animated.Value(Math.floor(i/3)*boxSize),marginLeftStatic:i%3*boxSize,marginTopStatic:Math.floor(i/3)*boxSize,moveX:0,moveY:0,zIndex:0,index:i};});_this.state={dataList:eleList,scrollEnabled:true};return _this;}babelHelpers.createClass(MainFunctionGrid,[{key:'render',value:function render()
+
+{
+return(
+_react2.default.createElement(_reactNative.ScrollView,{
+scrollEnabled:this.state.scrollEnabled},
+
+_react2.default.createElement(_reactNative.View,{
+style:{
+height:this.calcListHeight()}},
+
+
+this.renderCells())));
+
+
+
+}},{key:'calcListHeight',value:function calcListHeight()
+
+{
+var listHeight=Math.ceil(this.state.dataList.length/3)*boxSize;
+return listHeight;
+}},{key:'renderCells',value:function renderCells()
+
+{var _this2=this;
+return this.state.dataList.map(function(d){
+return(
+_react2.default.createElement(_reactNative.Animated.View,babelHelpers.extends({
+style:[myStyles.box,{
+zIndex:d.zIndex,
+marginLeft:d.marginLeft,
+marginTop:d.marginTop}],
+
+
+key:d.data},
+_this2.newPanResponder(d).panHandlers),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+_react2.default.createElement(_reactNative.Text,{key:d.data,style:myStyles.text},
+d.data,' - ',d.index)));
+
+
+
+});
+}},{key:'findNodeByIndex',value:function findNodeByIndex(
+
+index){
+var dataList=this.state.dataList;
+for(var i=0;i<dataList.length;i++){
+if(dataList[i].index==index){
+return dataList[i];
+}
+}
+}},{key:'_setMarginWithAnim',value:function _setMarginWithAnim(
+
+node,duration){
+node.marginLeftStatic=node.index%3*boxSize;
+node.marginTopStatic=Math.floor(node.index/3)*boxSize;
+_reactNative.Animated.parallel([
+_reactNative.Animated.timing(
+node.marginLeft,
+{
+toValue:node.marginLeftStatic,
+duration:duration}),
+
+
+_reactNative.Animated.timing(
+node.marginTop,
+{
+toValue:node.marginTopStatic,
+duration:duration})]).
+
+
+start();
+}},{key:'newPanResponder',value:function newPanResponder(
+
+node){var _this3=this;
+return _reactNative.PanResponder.create({
+
+onStartShouldSetPanResponder:function onStartShouldSetPanResponder(evt,gestureState){
+if(gestureState.numberActiveTouches<=1){
+node.touchTimer=setTimeout(function(){
+node.touchable=true;
+node.zIndex=_this3.maxzIndex++;
+_this3.setState({scrollEnabled:false});
+},700);
+}
+return false;
+},
+
+onMoveShouldSetPanResponder:function onMoveShouldSetPanResponder(evt,gestureState){
+if(node.touchTimer){
+clearTimeout(node.touchTimer);
+}
+return node.touchable;
+},
+onMoveShouldSetPanResponderCapture:function onMoveShouldSetPanResponderCapture(evt,gestureState){
+
+},
+
+onPanResponderGrant:function onPanResponderGrant(evt,gestureState){
+
+
+
+
+
+
+},
+onPanResponderMove:function onPanResponderMove(evt,gestureState){
+
+
+
+
+
+console.info("onPanResponderMove"+gestureState.y0);
+
+
+node.moveX+=gestureState.dx;
+node.moveY+=gestureState.dy;
+var newLeft=node.marginLeftStatic+node.moveX;
+var newTop=node.marginTopStatic+node.moveY;
+
+node.marginLeft.setValue(newLeft);
+node.marginTop.setValue(newTop);
+
+var selfIndex=node.index;
+var currentIndex=Math.floor((newTop+boxSize/2)/boxSize)*3+Math.floor((newLeft+boxSize/2)/boxSize);
+
+
+if(currentIndex>selfIndex){
+for(var i=selfIndex+1;i<=currentIndex;i++){
+var newIndex=i-1;
+var moveNode=_this3.findNodeByIndex(i);
+moveNode.index=newIndex;
+_this3._setMarginWithAnim(moveNode,250);
+}
+node.index=currentIndex;
+}
+if(currentIndex<selfIndex){
+for(var _i=selfIndex-1;_i>=currentIndex;_i--){
+var _newIndex=_i+1;
+var _moveNode=_this3.findNodeByIndex(_i);
+_moveNode.index=_newIndex;
+_this3._setMarginWithAnim(_moveNode,250);
+}
+node.index=currentIndex;
+}
+_this3.setState({});
+},
+onPanResponderTerminationRequest:function onPanResponderTerminationRequest(evt,gestureState){return true;},
+onPanResponderRelease:function onPanResponderRelease(evt,gestureState){
+
+
+node.touchable=false;
+if(node.touchTimer){
+clearTimeout(node.touchTimer);
+}
+_this3.setState({scrollEnabled:true});
+node.moveX=0;
+node.moveY=0;
+_this3._setMarginWithAnim(node,200);
+},
+onPanResponderTerminate:function onPanResponderTerminate(evt,gestureState){
+
+},
+onShouldBlockNativeResponder:function onShouldBlockNativeResponder(evt,gestureState){
+
+
+return true;
+}});
+
+}}]);return MainFunctionGrid;}(_react.Component);exports.default=MainFunctionGrid;
+
+
+var myStyles=_reactNative.StyleSheet.create({
+text:{
+color:"#ff0000",
+fontSize:30},
+
+box:{
+width:_reactNative.Dimensions.get('window').width/3,
+height:_reactNative.Dimensions.get('window').width/3,
+backgroundColor:'#99ff9988',
+position:'absolute'}});
+}, 563, null, "NightNative/common/MainFunctionGrid.js");
+__d(/* NightNative/common/MainPage.js */function(global, require, module, exports) {Object.defineProperty(exports,"__esModule",{value:true});var _react=require(12 /* react */);var _react2=babelHelpers.interopRequireDefault(_react);
+var _reactNative=require(42 /* react-native */);
+
+var _MainFunctionGrid=require(563 /* ./MainFunctionGrid */);var _MainFunctionGrid2=babelHelpers.interopRequireDefault(_MainFunctionGrid);var
+MainPage=function(_Component){babelHelpers.inherits(MainPage,_Component);function MainPage(){babelHelpers.classCallCheck(this,MainPage);return babelHelpers.possibleConstructorReturn(this,(MainPage.__proto__||Object.getPrototypeOf(MainPage)).apply(this,arguments));}babelHelpers.createClass(MainPage,[{key:'render',value:function render()
+
+{
+return(
+_react2.default.createElement(_reactNative.View,{style:{
+flex:1}},
+
+_react2.default.createElement(_reactNative.View,{
+style:{
+height:50}},
+
+
+_react2.default.createElement(_reactNative.Text,null,'123')),
+
+_react2.default.createElement(_MainFunctionGrid2.default,null)));
+
+
+
+
+}}]);return MainPage;}(_react.Component);exports.default=MainPage;
+}, 564, null, "NightNative/common/MainPage.js");
 ;require(192);
 ;require(0);
 //# sourceMappingURL=index.android.map

@@ -108,7 +108,9 @@ import myListView from './mytest/testListView'
 import myTestFetch from './mytest/testFetch'
 import myXin from './mytest/testXin'
 import myScrollView from './mytest/testScrollView'//仿viewpager
-import myScrollView2 from './mytest/testScrollView2'//双指缩放
+import myScrollView2 from './mytest/testScrollView2'//测试拖拽
+import MainFunctionGrid from './common/MainFunctionGrid'
+import MainPage from './common/MainPage'
 
 // AppRegistry.registerComponent('NightNative', () => NightNative);
-AppRegistry.registerComponent('NightNative', () => myScrollView2);
+AppRegistry.registerComponent('NightNative', () => MainPage);
