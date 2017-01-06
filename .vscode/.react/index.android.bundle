@@ -90658,39 +90658,42 @@ var _reactNative=require(42 /* react-native */);
 
 
 
+
 var boxSize=_reactNative.Dimensions.get('window').width/3;var
 
 MainFunctionGrid=function(_Component){babelHelpers.inherits(MainFunctionGrid,_Component);
 
 
 function MainFunctionGrid(props){babelHelpers.classCallCheck(this,MainFunctionGrid);var _this=babelHelpers.possibleConstructorReturn(this,(MainFunctionGrid.__proto__||Object.getPrototypeOf(MainFunctionGrid)).call(this,
-props));_this.maxzIndex=1;_this.
+props));_this.maxzIndex=1;
+var initList=[];
+for(var i=0;i<20;i++){
+initList.push(i);
+}
+var eleList=initList.map(function(v,i){
+console.info(v,i);
+return{
+data:v,
+marginLeft:new _reactNative.Animated.Value(i%3*boxSize),
+marginTop:new _reactNative.Animated.Value(Math.floor(i/3)*boxSize),
+marginLeftStatic:i%3*boxSize,
+marginTopStatic:Math.floor(i/3)*boxSize,
+moveX:0,
+moveY:0,
+zIndex:0,
+index:i,
+onClick:_this.onItemClick};
 
+});
+_this.state={
+dataList:eleList,
+scrollEnabled:true};return _this;
 
+}babelHelpers.createClass(MainFunctionGrid,[{key:'onItemClick',value:function onItemClick(
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-evtY=0;_this.
-evtX=0;var initList=[];for(var i=0;i<20;i++){initList.push(i);}var eleList=initList.map(function(v,i){console.info(v,i);return{data:v,marginLeft:new _reactNative.Animated.Value(i%3*boxSize),marginTop:new _reactNative.Animated.Value(Math.floor(i/3)*boxSize),marginLeftStatic:i%3*boxSize,marginTopStatic:Math.floor(i/3)*boxSize,moveX:0,moveY:0,zIndex:0,index:i};});_this.state={dataList:eleList,scrollEnabled:true};return _this;}babelHelpers.createClass(MainFunctionGrid,[{key:'render',value:function render()
+node){
+console.info(node.data);
+}},{key:'render',value:function render()
 
 {
 return(
@@ -90722,67 +90725,31 @@ zIndex:d.zIndex,
 marginLeft:d.marginLeft,
 marginTop:d.marginTop}],
 
-
 key:d.data},
 _this2.newPanResponder(d).panHandlers),
 
 
+_react2.default.createElement(_reactNative.TouchableOpacity,{
+style:{
+flex:1,
+justifyContent:'center'},
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+onPress:function onPress(){
+console.info('onclick..');
+}},
+_react2.default.createElement(_reactNative.View,{
+style:{
+flex:1,
+backgroundColor:"#AAFF0088",
+alignSelf:'stretch',
+alignItems:'center',
+justifyContent:'center'}},
 
 
 _react2.default.createElement(_reactNative.Text,{key:d.data,style:myStyles.text},
-d.data,' - ',d.index)));
+d.data,' - ',d.index)))));
+
+
 
 
 
@@ -90823,31 +90790,45 @@ node){var _this3=this;
 return _reactNative.PanResponder.create({
 
 onStartShouldSetPanResponder:function onStartShouldSetPanResponder(evt,gestureState){
+
 if(gestureState.numberActiveTouches<=1){
 node.touchTimer=setTimeout(function(){
-node.touchable=true;
+node.moveable=true;
 node.zIndex=_this3.maxzIndex++;
 _this3.setState({scrollEnabled:false});
 },700);
 }
 return false;
 },
+onStartShouldSetPanResponderCapture:function onStartShouldSetPanResponderCapture(evt,gestureState){
 
+if(gestureState.numberActiveTouches<=1){
+node.touchTimer=setTimeout(function(){
+node.moveable=true;
+node.zIndex=_this3.maxzIndex++;
+_this3.setState({scrollEnabled:false});
+},700);
+}
+return false;
+},
 onMoveShouldSetPanResponder:function onMoveShouldSetPanResponder(evt,gestureState){
+
 if(node.touchTimer){
 clearTimeout(node.touchTimer);
+_this3.setState({scrollEnabled:true});
 }
-return node.touchable;
+return node.moveable;
 },
 onMoveShouldSetPanResponderCapture:function onMoveShouldSetPanResponderCapture(evt,gestureState){
 
+if(node.touchTimer){
+clearTimeout(node.touchTimer);
+_this3.setState({scrollEnabled:true});
+}
+return node.moveable;
 },
 
 onPanResponderGrant:function onPanResponderGrant(evt,gestureState){
-
-
-
-
 
 
 },
@@ -90872,7 +90853,7 @@ var selfIndex=node.index;
 var currentIndex=Math.floor((newTop+boxSize/2)/boxSize)*3+Math.floor((newLeft+boxSize/2)/boxSize);
 
 
-if(currentIndex>selfIndex){
+if(currentIndex>selfIndex&&currentIndex<_this3.state.dataList.length){
 for(var i=selfIndex+1;i<=currentIndex;i++){
 var newIndex=i-1;
 var moveNode=_this3.findNodeByIndex(i);
@@ -90881,7 +90862,7 @@ _this3._setMarginWithAnim(moveNode,250);
 }
 node.index=currentIndex;
 }
-if(currentIndex<selfIndex){
+if(currentIndex<selfIndex&&currentIndex>=0){
 for(var _i=selfIndex-1;_i>=currentIndex;_i--){
 var _newIndex=_i+1;
 var _moveNode=_this3.findNodeByIndex(_i);
@@ -90896,7 +90877,12 @@ onPanResponderTerminationRequest:function onPanResponderTerminationRequest(evt,g
 onPanResponderRelease:function onPanResponderRelease(evt,gestureState){
 
 
-node.touchable=false;
+
+
+
+
+
+node.moveable=false;
 if(node.touchTimer){
 clearTimeout(node.touchTimer);
 }
@@ -90907,12 +90893,12 @@ _this3._setMarginWithAnim(node,200);
 },
 onPanResponderTerminate:function onPanResponderTerminate(evt,gestureState){
 
-},
-onShouldBlockNativeResponder:function onShouldBlockNativeResponder(evt,gestureState){
-
-
-return true;
 }});
+
+
+
+
+
 
 }}]);return MainFunctionGrid;}(_react.Component);exports.default=MainFunctionGrid;
 
@@ -90925,7 +90911,7 @@ fontSize:30},
 box:{
 width:_reactNative.Dimensions.get('window').width/3,
 height:_reactNative.Dimensions.get('window').width/3,
-backgroundColor:'#99ff9988',
+backgroundColor:'#00000000',
 position:'absolute'}});
 }, 563, null, "NightNative/common/MainFunctionGrid.js");
 __d(/* NightNative/common/MainPage.js */function(global, require, module, exports) {Object.defineProperty(exports,"__esModule",{value:true});var _react=require(12 /* react */);var _react2=babelHelpers.interopRequireDefault(_react);
@@ -90946,8 +90932,12 @@ height:50}},
 
 _react2.default.createElement(_reactNative.Text,null,'123')),
 
-_react2.default.createElement(_MainFunctionGrid2.default,null)));
+_react2.default.createElement(_MainFunctionGrid2.default,null),
+_react2.default.createElement(_reactNative.View,{
+style:{
+height:50}},
 
+_react2.default.createElement(_reactNative.Text,null,'123'))));
 
 
 
