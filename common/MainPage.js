@@ -42,7 +42,7 @@ export default class MainPage extends Component {
                 <View
                     style={{
                         backgroundColor: '#7777FF',
-                        height: 60,
+                        height: 50,
                         alignItems: 'center',
                         justifyContent: 'center'
                     }}
@@ -50,7 +50,7 @@ export default class MainPage extends Component {
                     <Text
                         style={{
                             color: '#FFFFFF',
-                            fontSize: 26,
+                            fontSize: 20,
 
                         }}
                         >标题</Text>
@@ -61,11 +61,23 @@ export default class MainPage extends Component {
                     style={{ flex: 1 }}
                     pagingEnabled={true}
                     horizontal={true}
+                    onScroll={(evt)=>{
+                        this.refs.mainGrid.resetGridViewTouchState("bb")
+                    }}
                     showsHorizontalScrollIndicator={false}
                     >
                     <MainFunctionGrid
-                        onDragStart={() => { this.setState({ scrollEnabled: false }); } }
-                        onDragEnd={() => { this.setState({ scrollEnabled: true }); } }
+                        ref = 'mainGrid'
+                        onDragStart={() => {
+                            if (this.state.scrollEnabled) {
+                                this.setState({ scrollEnabled: false });
+                            }
+                        } }
+                        onDragEnd={() => {
+                            if (!this.state.scrollEnabled) {
+                                this.setState({ scrollEnabled: true });
+                            }
+                        } }
                         style={mainStyles.pageView} />
                     <ContactsList style={mainStyles.pageView} />
                     <FunctionList style={mainStyles.pageView} />
@@ -78,7 +90,7 @@ export default class MainPage extends Component {
                         flexDirection: 'row',
                         borderTopColor: '#ff0000',
                         borderTopWidth: 1,
-                        height: 80
+                        height: 62
                     }}>
                     {this.itemList.map((value, index) => {
                         return this._renderItemButton(value, index)
@@ -126,6 +138,7 @@ const mainStyles = StyleSheet.create({
         height: iconSize
     },
     iconLabel: {
-        marginTop: 3
+        marginTop: 2,
+        fontSize: 15,
     }
 })

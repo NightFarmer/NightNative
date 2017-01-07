@@ -43,6 +43,7 @@ export default class MainFunctionGrid extends Component {
             <ScrollView
                 scrollEnabled={this.state.scrollEnabled}
                 style={this.props.style}
+                onScroll={() => { this._touchTime = -1 } }
                 >
                 <View
                     style={{
@@ -108,24 +109,45 @@ export default class MainFunctionGrid extends Component {
         ]).start();
     }
 
+    _touchTimer = null
+
+    _touchTime = -1
+
+    judgeMoveItem(node) {
+        // console.info(this._touchTime, new Date().getTime() - this._touchTime)
+        if (this._touchTime > 0 && new Date().getTime() - this._touchTime > 500) {
+            //准备拖拽环境
+            //开始拦截拖拽事件
+            return true
+        }
+        this.resetTouchState(" move ")
+        return false
+    }
+
     _setNodeDragTimer(node) {
-        node.touchTimer = setTimeout(() => {
-            node.moveable = true
+        if (this._touchTime > 0) return;
+        console.info(this._touchTime, "set timer")
+        this._touchTime = new Date().getTime()
+        this._touchTimer = setTimeout(() => {
+            if (this._touchTime == -1) return;
             node.zIndex = this.maxzIndex++
             this.setState({ scrollEnabled: false });
             // vibrate(100)
             if (this.props.onDragStart) {
+                console.info(" no ")
                 this.props.onDragStart()
             }
         }, 500);
     }
 
-    _clearNodeDragTimer(node) {
-        if (node.touchTimer) {
-            clearTimeout(node.touchTimer)
+    resetTouchState(msg) {
+        if (this._touchTimer) {
+            clearTimeout(this._touchTimer)
         }
+        this._touchTime = -1
         this.setState({ scrollEnabled: true });
         if (this.props.onDragEnd) {
+            console.info(" yes ", msg)
             this.props.onDragEnd()
         }
     }
@@ -149,13 +171,15 @@ export default class MainFunctionGrid extends Component {
             },
             onMoveShouldSetPanResponder: (evt, gestureState) => {
                 // console.info('onMoveShouldSetPanResponder')
-                this._clearNodeDragTimer(node)
-                return node.moveable
+                // this._clearNodeDragTimer(node)
+                // return node.moveable
+                return this.judgeMoveItem(node)
             },
             onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
-                // console.info('onMoveShouldSetPanResponderCapture')
-                this._clearNodeDragTimer(node)
-                return node.moveable
+                // console.info('onMoveShouldSetPanResponderCapture', node.moveable, " #")
+                // this._clearNodeDragTimer(node)
+                // return node.moveable
+                return this.judgeMoveItem(node)
             },
 
             onPanResponderGrant: (evt, gestureState) => {
@@ -200,20 +224,20 @@ export default class MainFunctionGrid extends Component {
                 }
                 this.setState({});
             },
-            onPanResponderTerminationRequest: (evt, gestureState) => true,//放权
+            onPanResponderTerminationRequest: (evt, gestureState) => false,//放权
             onPanResponderRelease: (evt, gestureState) => {
                 // 用户放开了所有的触摸点，且此时视图已经成为了响应者。
                 // 一般来说这意味着一个手势操作已经成功完成。
-                node.moveable = false
-                this._clearNodeDragTimer(node)
+                console.info('onPanResponderRelease')
+                this.resetTouchState()
                 node.moveX = 0;
                 node.moveY = 0;
                 this._setMarginWithAnim(node, 200)
             },
             onPanResponderTerminate: (evt, gestureState) => {
                 // 另一个组件已经成为了新的响应者，所以当前手势将被取消。
-                node.moveable = false
-                this._clearNodeDragTimer(node)
+                console.info('onPanResponderTerminate')
+                this.resetTouchState()
                 node.moveX = 0;
                 node.moveY = 0;
                 this._setMarginWithAnim(node, 200)
@@ -223,6 +247,8 @@ export default class MainFunctionGrid extends Component {
             //     // 默认返回true。目前暂时只支持android。
             //     return true;
             // },
+
+            //下滑两次 出现
         })
     }
 }

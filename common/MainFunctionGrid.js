@@ -23,7 +23,8 @@ export default class MainFunctionGrid extends Component {
     render() {
         return (
             <DraggableGridView
-                renderItem={this.renderItem}
+                ref="dgv"
+                renderItem={() => this.renderItem()}
                 dataList={this.getDataList()}
                 {...this.props}
                 >
@@ -39,6 +40,10 @@ export default class MainFunctionGrid extends Component {
         return initList
     }
 
+    resetGridViewTouchState(msg) {
+        this.refs.dgv.resetTouchState(msg)
+    }
+
     renderItem(itemData, index) {
         return (
             <TouchableOpacity
@@ -48,6 +53,7 @@ export default class MainFunctionGrid extends Component {
                 }}
                 onPress={() => {
                     console.info('onclick..' + itemData)
+                    this.resetGridViewTouchState("aa")
                 } } >
                 <View
                     style={{
@@ -72,7 +78,7 @@ export default class MainFunctionGrid extends Component {
 const myStyles = StyleSheet.create({
     text: {
         color: "#ff0000",
-        fontSize: 22,
+        fontSize: 16,
         marginTop: 5
     },
     icon: {

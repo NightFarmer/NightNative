@@ -90655,7 +90655,10 @@ var _reactNative=require(42 /* react-native */);
 
 
 
-var _DraggableGridView=require(564 /* ./main/DraggableGridView */);var _DraggableGridView2=babelHelpers.interopRequireDefault(_DraggableGridView);var
+
+var _DraggableGridView=require(564 /* ./main/DraggableGridView */);var _DraggableGridView2=babelHelpers.interopRequireDefault(_DraggableGridView);
+
+var iconSize=_reactNative.Dimensions.get('window').width/3/2.5;var
 
 MainFunctionGrid=function(_Component){babelHelpers.inherits(MainFunctionGrid,_Component);
 
@@ -90665,10 +90668,11 @@ _this.state={};return _this;
 
 }babelHelpers.createClass(MainFunctionGrid,[{key:'render',value:function render()
 
-{
+{var _this2=this;
 return(
 _react2.default.createElement(_DraggableGridView2.default,babelHelpers.extends({
-renderItem:this.renderItem,
+ref:'dgv',
+renderItem:function renderItem(){return _this2.renderItem();},
 dataList:this.getDataList()},
 this.props)));
 
@@ -90682,9 +90686,13 @@ for(var i=0;i<20;i++){
 initList.push(i);
 }
 return initList;
+}},{key:'resetGridViewTouchState',value:function resetGridViewTouchState(
+
+msg){
+this.refs.dgv.resetTouchState(msg);
 }},{key:'renderItem',value:function renderItem(
 
-itemData,index){
+itemData,index){var _this3=this;
 return(
 _react2.default.createElement(_reactNative.TouchableOpacity,{
 style:{
@@ -90693,19 +90701,21 @@ justifyContent:'center'},
 
 onPress:function onPress(){
 console.info('onclick..'+itemData);
+_this3.resetGridViewTouchState("aa");
 }},
 _react2.default.createElement(_reactNative.View,{
 style:{
 flex:1,
-backgroundColor:"#AAFF0088",
+
 alignSelf:'stretch',
 alignItems:'center',
 justifyContent:'center'}},
 
 
-_react2.default.createElement(_reactNative.Image,{source:require(565 /* ./resource/img/func1.png */)}),
-_react2.default.createElement(_reactNative.Text,{key:itemData,style:myStyles.text},
-itemData,' - ',index))));
+_react2.default.createElement(_reactNative.Image,{style:myStyles.icon,
+source:require(565 /* ./resource/img/func1.png */)}),
+_react2.default.createElement(_reactNative.Text,{key:itemData,style:myStyles.text},'\u529F\u80FD',
+itemData))));
 
 
 
@@ -90716,7 +90726,12 @@ itemData,' - ',index))));
 var myStyles=_reactNative.StyleSheet.create({
 text:{
 color:"#ff0000",
-fontSize:30}});
+fontSize:16,
+marginTop:5},
+
+icon:{
+width:iconSize,
+height:iconSize}});
 }, 563, null, "NightNative/common/MainFunctionGrid.js");
 __d(/* NightNative/common/main/DraggableGridView.js */function(global, require, module, exports) {Object.defineProperty(exports,"__esModule",{value:true});var _react=require(12 /* react */);var _react2=babelHelpers.interopRequireDefault(_react);
 var _reactNative=require(42 /* react-native */);
@@ -90737,145 +90752,169 @@ MainFunctionGrid=function(_Component){babelHelpers.inherits(MainFunctionGrid,_Co
 
 
 function MainFunctionGrid(props){babelHelpers.classCallCheck(this,MainFunctionGrid);var _this=babelHelpers.possibleConstructorReturn(this,(MainFunctionGrid.__proto__||Object.getPrototypeOf(MainFunctionGrid)).call(this,
-props));_this.maxzIndex=1;
-var eleList=_this.props.dataList.map(function(v,i){
-console.info(v,i);
-return{
-data:v,
-marginLeft:new _reactNative.Animated.Value(i%3*boxSize),
-marginTop:new _reactNative.Animated.Value(Math.floor(i/3)*boxSize),
-marginLeftStatic:i%3*boxSize,
-marginTopStatic:Math.floor(i/3)*boxSize,
-moveX:0,
-moveY:0,
-zIndex:0,
-index:i};
-
-});
-_this.state={
-dataList:eleList,
-scrollEnabled:true};return _this;
-
-}babelHelpers.createClass(MainFunctionGrid,[{key:'render',value:function render()
-
-{
-return(
-_react2.default.createElement(_reactNative.ScrollView,{
-scrollEnabled:this.state.scrollEnabled,
-style:this.props.style},
-
-_react2.default.createElement(_reactNative.View,{
-style:{
-height:this.calcListHeight()}},
-
-
-this.renderCells())));
+props));_this.maxzIndex=1;_this.
 
 
 
-}},{key:'calcListHeight',value:function calcListHeight()
-
-{
-var listHeight=Math.ceil(this.state.dataList.length/3)*boxSize;
-return listHeight;
-}},{key:'renderCells',value:function renderCells()
-
-{var _this2=this;
-return this.state.dataList.map(function(d){
-return(
-_react2.default.createElement(_reactNative.Animated.View,babelHelpers.extends({
-style:[myStyles.box,{
-zIndex:d.zIndex,
-marginLeft:d.marginLeft,
-marginTop:d.marginTop}],
-
-key:d.data},
-_this2.newPanResponder(d).panHandlers),
-
-_this2.props.renderItem(d.data,d.index)));
 
 
-});
-}},{key:'findNodeByIndex',value:function findNodeByIndex(
-
-index){
-var dataList=this.state.dataList;
-for(var i=0;i<dataList.length;i++){
-if(dataList[i].index==index){
-return dataList[i];
-}
-}
-}},{key:'_setMarginWithAnim',value:function _setMarginWithAnim(
-
-node,duration){
-node.marginLeftStatic=node.index%3*boxSize;
-node.marginTopStatic=Math.floor(node.index/3)*boxSize;
-_reactNative.Animated.parallel([
-_reactNative.Animated.timing(
-node.marginLeft,
-{
-toValue:node.marginLeftStatic,
-duration:duration}),
 
 
-_reactNative.Animated.timing(
-node.marginTop,
-{
-toValue:node.marginTopStatic,
-duration:duration})]).
 
 
-start();
-}},{key:'_setNodeDragTimer',value:function _setNodeDragTimer(
 
-node){var _this3=this;
-node.touchTimer=setTimeout(function(){
-node.moveable=true;
-node.zIndex=_this3.maxzIndex++;
-_this3.setState({scrollEnabled:false});
 
-if(_this3.props.onDragStart){
-_this3.props.onDragStart();
-}
-},500);
-}},{key:'_clearNodeDragTimer',value:function _clearNodeDragTimer(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+_touchTimer=null;_this.
+
+_touchTime=-1;var eleList=_this.props.dataList.map(function(v,i){console.info(v,i);return{data:v,marginLeft:new _reactNative.Animated.Value(i%3*boxSize),marginTop:new _reactNative.Animated.Value(Math.floor(i/3)*boxSize),marginLeftStatic:i%3*boxSize,marginTopStatic:Math.floor(i/3)*boxSize,moveX:0,moveY:0,zIndex:0,index:i};});_this.state={dataList:eleList,scrollEnabled:true};return _this;}babelHelpers.createClass(MainFunctionGrid,[{key:'render',value:function render(){var _this2=this;return _react2.default.createElement(_reactNative.ScrollView,{scrollEnabled:this.state.scrollEnabled,style:this.props.style,onScroll:function onScroll(){_this2._touchTime=-1;}},_react2.default.createElement(_reactNative.View,{style:{height:this.calcListHeight()}},this.renderCells()));}},{key:'calcListHeight',value:function calcListHeight(){var listHeight=Math.ceil(this.state.dataList.length/3)*boxSize;return listHeight;}},{key:'renderCells',value:function renderCells(){var _this3=this;return this.state.dataList.map(function(d){return _react2.default.createElement(_reactNative.Animated.View,babelHelpers.extends({style:[myStyles.box,{zIndex:d.zIndex,marginLeft:d.marginLeft,marginTop:d.marginTop}],key:d.data},_this3.newPanResponder(d).panHandlers),_this3.props.renderItem(d.data,d.index));});}},{key:'findNodeByIndex',value:function findNodeByIndex(index){var dataList=this.state.dataList;for(var i=0;i<dataList.length;i++){if(dataList[i].index==index){return dataList[i];}}}},{key:'_setMarginWithAnim',value:function _setMarginWithAnim(node,duration){node.marginLeftStatic=node.index%3*boxSize;node.marginTopStatic=Math.floor(node.index/3)*boxSize;_reactNative.Animated.parallel([_reactNative.Animated.timing(node.marginLeft,{toValue:node.marginLeftStatic,duration:duration}),_reactNative.Animated.timing(node.marginTop,{toValue:node.marginTopStatic,duration:duration})]).start();}},{key:'judgeMoveItem',value:function judgeMoveItem(
 
 node){
-if(node.touchTimer){
-clearTimeout(node.touchTimer);
+
+if(this._touchTime>0&&new Date().getTime()-this._touchTime>500){
+
+
+return true;
 }
+this.resetTouchState(" move ");
+return false;
+}},{key:'_setNodeDragTimer',value:function _setNodeDragTimer(
+
+node){var _this4=this;
+if(this._touchTime>0)return;
+console.info(this._touchTime,"set timer");
+this._touchTime=new Date().getTime();
+this._touchTimer=setTimeout(function(){
+if(_this4._touchTime==-1)return;
+node.zIndex=_this4.maxzIndex++;
+_this4.setState({scrollEnabled:false});
+
+if(_this4.props.onDragStart){
+console.info(" no ");
+_this4.props.onDragStart();
+}
+},500);
+}},{key:'resetTouchState',value:function resetTouchState(
+
+msg){
+if(this._touchTimer){
+clearTimeout(this._touchTimer);
+}
+this._touchTime=-1;
 this.setState({scrollEnabled:true});
 if(this.props.onDragEnd){
+console.info(" yes ",msg);
 this.props.onDragEnd();
 }
 }},{key:'newPanResponder',value:function newPanResponder(
 
-node){var _this4=this;
+node){var _this5=this;
 return _reactNative.PanResponder.create({
 
 onStartShouldSetPanResponder:function onStartShouldSetPanResponder(evt,gestureState){
 
 if(gestureState.numberActiveTouches<=1){
-_this4._setNodeDragTimer(node);
+_this5._setNodeDragTimer(node);
 }
 return false;
 },
 onStartShouldSetPanResponderCapture:function onStartShouldSetPanResponderCapture(evt,gestureState){
 
 if(gestureState.numberActiveTouches<=1){
-_this4._setNodeDragTimer(node);
+_this5._setNodeDragTimer(node);
 }
 return false;
 },
 onMoveShouldSetPanResponder:function onMoveShouldSetPanResponder(evt,gestureState){
 
-_this4._clearNodeDragTimer(node);
-return node.moveable;
+
+
+return _this5.judgeMoveItem(node);
 },
 onMoveShouldSetPanResponderCapture:function onMoveShouldSetPanResponderCapture(evt,gestureState){
 
-_this4._clearNodeDragTimer(node);
-return node.moveable;
+
+
+return _this5.judgeMoveItem(node);
 },
 
 onPanResponderGrant:function onPanResponderGrant(evt,gestureState){
@@ -90900,44 +90939,46 @@ var selfIndex=node.index;
 var currentIndex=Math.floor((newTop+boxSize/2)/boxSize)*3+Math.floor((newLeft+boxSize/2)/boxSize);
 
 
-if(currentIndex>selfIndex&&currentIndex<_this4.state.dataList.length){
+if(currentIndex>selfIndex&&currentIndex<_this5.state.dataList.length){
 for(var i=selfIndex+1;i<=currentIndex;i++){
 var newIndex=i-1;
-var moveNode=_this4.findNodeByIndex(i);
+var moveNode=_this5.findNodeByIndex(i);
 moveNode.index=newIndex;
-_this4._setMarginWithAnim(moveNode,250);
+_this5._setMarginWithAnim(moveNode,250);
 }
 node.index=currentIndex;
 }
 if(currentIndex<selfIndex&&currentIndex>=0){
 for(var _i=selfIndex-1;_i>=currentIndex;_i--){
 var _newIndex=_i+1;
-var _moveNode=_this4.findNodeByIndex(_i);
+var _moveNode=_this5.findNodeByIndex(_i);
 _moveNode.index=_newIndex;
-_this4._setMarginWithAnim(_moveNode,250);
+_this5._setMarginWithAnim(_moveNode,250);
 }
 node.index=currentIndex;
 }
-_this4.setState({});
+_this5.setState({});
 },
-onPanResponderTerminationRequest:function onPanResponderTerminationRequest(evt,gestureState){return true;},
+onPanResponderTerminationRequest:function onPanResponderTerminationRequest(evt,gestureState){return false;},
 onPanResponderRelease:function onPanResponderRelease(evt,gestureState){
 
 
-node.moveable=false;
-_this4._clearNodeDragTimer(node);
+console.info('onPanResponderRelease');
+_this5.resetTouchState();
 node.moveX=0;
 node.moveY=0;
-_this4._setMarginWithAnim(node,200);
+_this5._setMarginWithAnim(node,200);
 },
 onPanResponderTerminate:function onPanResponderTerminate(evt,gestureState){
 
-node.moveable=false;
-_this4._clearNodeDragTimer(node);
+console.info('onPanResponderTerminate');
+_this5.resetTouchState();
 node.moveX=0;
 node.moveY=0;
-_this4._setMarginWithAnim(node,200);
+_this5._setMarginWithAnim(node,200);
 }});
+
+
 
 
 
@@ -90965,15 +91006,28 @@ var _reactNative=require(42 /* react-native */);
 
 
 
+
+
 var _MainFunctionGrid=require(563 /* ./MainFunctionGrid */);var _MainFunctionGrid2=babelHelpers.interopRequireDefault(_MainFunctionGrid);
 var _ContactsList=require(567 /* ./ContactsList */);var _ContactsList2=babelHelpers.interopRequireDefault(_ContactsList);
 var _FunctionList=require(568 /* ./FunctionList */);var _FunctionList2=babelHelpers.interopRequireDefault(_FunctionList);
-var _AboutMe=require(569 /* ./AboutMe */);var _AboutMe2=babelHelpers.interopRequireDefault(_AboutMe);var
+var _AboutMe=require(569 /* ./AboutMe */);var _AboutMe2=babelHelpers.interopRequireDefault(_AboutMe);
+
+
+var iconSize=30;
+var windowWidth=_reactNative.Dimensions.get('window').width;var
 
 MainPage=function(_Component){babelHelpers.inherits(MainPage,_Component);
 
+
+
+
+
+
+
+
 function MainPage(props){babelHelpers.classCallCheck(this,MainPage);var _this=babelHelpers.possibleConstructorReturn(this,(MainPage.__proto__||Object.getPrototypeOf(MainPage)).call(this,
-props));
+props));_this.itemList=['A','B','C','D'];
 _this.state={
 scrollEnabled:true};return _this;
 
@@ -90986,21 +91040,43 @@ flex:1}},
 
 _react2.default.createElement(_reactNative.View,{
 style:{
-height:50}},
+backgroundColor:'#7777FF',
+height:50,
+alignItems:'center',
+justifyContent:'center'}},
 
 
-_react2.default.createElement(_reactNative.Text,null,'123')),
+_react2.default.createElement(_reactNative.Text,{
+style:{
+color:'#FFFFFF',
+fontSize:20}},'\u6807\u9898')),
+
+
+
 
 _react2.default.createElement(_reactNative.ScrollView,{
+ref:'scrollView',
 scrollEnabled:this.state.scrollEnabled,
 style:{flex:1},
 pagingEnabled:true,
 horizontal:true,
+onScroll:function onScroll(evt){
+_this2.refs.mainGrid.resetGridViewTouchState("bb");
+},
 showsHorizontalScrollIndicator:false},
 
 _react2.default.createElement(_MainFunctionGrid2.default,{
-onDragStart:function onDragStart(){_this2.setState({scrollEnabled:false});},
-onDragEnd:function onDragEnd(){_this2.setState({scrollEnabled:true});},
+ref:'mainGrid',
+onDragStart:function onDragStart(){
+if(_this2.state.scrollEnabled){
+_this2.setState({scrollEnabled:false});
+}
+},
+onDragEnd:function onDragEnd(){
+if(!_this2.state.scrollEnabled){
+_this2.setState({scrollEnabled:true});
+}
+},
 style:mainStyles.pageView}),
 _react2.default.createElement(_ContactsList2.default,{style:mainStyles.pageView}),
 _react2.default.createElement(_FunctionList2.default,{style:mainStyles.pageView}),
@@ -91008,9 +91084,40 @@ _react2.default.createElement(_AboutMe2.default,{style:mainStyles.pageView})),
 
 _react2.default.createElement(_reactNative.View,{
 style:{
-height:50}},
+alignItems:'center',
+justifyContent:'space-around',
+flexDirection:'row',
+borderTopColor:'#ff0000',
+borderTopWidth:1,
+height:62}},
 
-_react2.default.createElement(_reactNative.Text,null,'123'))));
+this.itemList.map(function(value,index){
+return _this2._renderItemButton(value,index);
+}))));
+
+
+
+}},{key:'_renderItemButton',value:function _renderItemButton(
+
+text,index){var _this3=this;
+return(
+_react2.default.createElement(_reactNative.TouchableOpacity,{
+key:index,
+onPress:function onPress(){
+_this3.refs.scrollView.scrollTo({x:index*windowWidth,y:0,animated:true});
+}},
+
+_react2.default.createElement(_reactNative.View,{
+style:{
+alignItems:'center',
+justifyContent:'center',
+padding:10}},
+
+
+_react2.default.createElement(_reactNative.Image,{style:mainStyles.icon,
+source:require(565 /* ./resource/img/func1.png */)}),
+_react2.default.createElement(_reactNative.Text,{style:mainStyles.iconLabel},
+text))));
 
 
 
@@ -91019,9 +91126,19 @@ _react2.default.createElement(_reactNative.Text,null,'123'))));
 
 
 
+
+
 var mainStyles=_reactNative.StyleSheet.create({
 pageView:{
-width:_reactNative.Dimensions.get('window').width}});
+width:windowWidth},
+
+icon:{
+width:iconSize,
+height:iconSize},
+
+iconLabel:{
+marginTop:2,
+fontSize:15}});
 }, 566, null, "NightNative/common/MainPage.js");
 __d(/* NightNative/common/ContactsList.js */function(global, require, module, exports) {Object.defineProperty(exports,"__esModule",{value:true});var _react=require(12 /* react */);var _react2=babelHelpers.interopRequireDefault(_react);
 var _reactNative=require(42 /* react-native */);var
