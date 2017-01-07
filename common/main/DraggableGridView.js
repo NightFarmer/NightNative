@@ -18,7 +18,7 @@ export default class MainFunctionGrid extends Component {
 
     constructor(props) {
         super(props);
-        if(props.resetState){
+        if (props.resetState) {
             this.resetTouchState()
         }
         let eleList = this.props.dataList.map((v, i) => {
@@ -68,6 +68,7 @@ export default class MainFunctionGrid extends Component {
         return this.state.dataList.map((d) => {
             return (
                 <Animated.View
+                    ref={(v) => { d.viewRef = v } }
                     style={[myStyles.box, {
                         zIndex: d.zIndex,
                         marginLeft: d.marginLeft,
@@ -150,7 +151,7 @@ export default class MainFunctionGrid extends Component {
         this._touchTime = -1
         this.setState({ scrollEnabled: true });
         if (this.props.onDragEnd) {
-            console.info(" yes ", msg)
+            // console.info(" yes ", msg)
             this.props.onDragEnd()
         }
     }
@@ -195,13 +196,16 @@ export default class MainFunctionGrid extends Component {
 
                 // let newLeft = evt.nativeEvent.pageX - evt.nativeEvent.locationX
                 // let newTop = evt.nativeEvent.pageY - evt.nativeEvent.locationY
-                node.moveX += gestureState.dx;
-                node.moveY += gestureState.dy;
+                node.moveX = gestureState.dx;
+                node.moveY = gestureState.dy;
                 let newLeft = node.marginLeftStatic + node.moveX;
                 let newTop = node.marginTopStatic + node.moveY;
+                // console.info(node.marginLeftStatic, node.moveX, gestureState.dx)
 
-                node.marginLeft.setValue(newLeft)
-                node.marginTop.setValue(newTop)
+
+
+                // console.info()
+                node.viewRef
 
                 let selfIndex = node.index
                 let currentIndex = Math.floor((newTop + boxSize / 2) / boxSize) * 3 + Math.floor((newLeft + boxSize / 2) / boxSize)
@@ -225,7 +229,11 @@ export default class MainFunctionGrid extends Component {
                     }
                     node.index = currentIndex
                 }
-                this.setState({});
+                // this.setState({});
+                // node.viewRef.setState({})
+
+                node.marginLeft.setValue(newLeft)
+                node.marginTop.setValue(newTop)
             },
             onPanResponderTerminationRequest: (evt, gestureState) => false,//放权
             onPanResponderRelease: (evt, gestureState) => {
@@ -264,3 +272,19 @@ const myStyles = StyleSheet.create({
         position: 'absolute',
     }
 })
+
+// class ItemView extends Animated.View {
+
+//     constructor(props) {
+//         super(props);
+//         this.state={}
+//     }
+
+//     render() {
+//         return (
+//             <Animated.View
+//                 {...this.props}
+//                 />
+//         )
+//     }
+// }
