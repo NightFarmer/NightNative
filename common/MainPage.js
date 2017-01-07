@@ -7,6 +7,8 @@ import {
     StyleSheet,
     Image,
     TouchableOpacity,
+    Platform,
+    ViewPagerAndroid,
 } from 'react-native';
 
 import MainFunctionGrid from './MainFunctionGrid'
@@ -30,7 +32,8 @@ export default class MainPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            scrollEnabled: true
+            scrollEnabled: true,
+            resetMainPageState: false
         }
     }
 
@@ -55,34 +58,34 @@ export default class MainPage extends Component {
                         }}
                         >标题</Text>
                 </View>
-                <ScrollView
-                    ref="scrollView"
-                    scrollEnabled={this.state.scrollEnabled}
-                    style={{ flex: 1 }}
-                    pagingEnabled={true}
-                    horizontal={true}
-                    onScroll={(evt)=>{
-                        this.refs.mainGrid.resetGridViewTouchState("bb")
-                    }}
-                    showsHorizontalScrollIndicator={false}
-                    >
-                    <MainFunctionGrid
-                        ref = 'mainGrid'
-                        onDragStart={() => {
-                            if (this.state.scrollEnabled) {
-                                this.setState({ scrollEnabled: false });
-                            }
+                {Platform.OS == 'android' ?
+                    <ViewPagerAndroid
+                        ref="viewPager"
+                        scrollEnabled={this.state.scrollEnabled}
+                        style={{ flex: 1 }}
+                        initialPage={0}
+                        onPageScroll={(evt) => {
+                            this.setState({ resetMainPageState: true });
                         } }
-                        onDragEnd={() => {
-                            if (!this.state.scrollEnabled) {
-                                this.setState({ scrollEnabled: true });
-                            }
+                        >
+                        {this._renderPagerViews()}
+                    </ViewPagerAndroid>
+                    :
+                    <ScrollView
+                        ref="scrollView"
+                        scrollEnabled={this.state.scrollEnabled}
+                        style={{ flex: 1 }}
+                        pagingEnabled={true}
+                        horizontal={true}
+                        onScroll={(evt) => {
+                            console.info(this.refs.length)
+                            this.refs.mainGrid.resetGridViewTouchState("bb")
                         } }
-                        style={mainStyles.pageView} />
-                    <ContactsList style={mainStyles.pageView} />
-                    <FunctionList style={mainStyles.pageView} />
-                    <AboutMe style={mainStyles.pageView} />
-                </ScrollView>
+                        showsHorizontalScrollIndicator={false}
+                        >
+                        {this._renderPagerViews()}
+                    </ScrollView>
+                }
                 <View
                     style={{
                         alignItems: 'center',
@@ -100,12 +103,39 @@ export default class MainPage extends Component {
         )
     }
 
+    _renderPagerViews() {
+        return ([
+            <MainFunctionGrid
+                resetState={this.state.resetMainPageState}
+                key={0}
+                ref={(aaa) => { console.info(11111111111111111111111111) } }
+                onDragStart={() => {
+                    if (this.state.scrollEnabled) {
+                        this.setState({ scrollEnabled: false });
+                    }
+                } }
+                onDragEnd={() => {
+                    if (!this.state.scrollEnabled) {
+                        this.setState({ scrollEnabled: true });
+                    }
+                } }
+                style={mainStyles.pageView} />,
+            <ContactsList key={1} style={mainStyles.pageView} />,
+            <FunctionList key={2} style={mainStyles.pageView} />,
+            <AboutMe key={3} style={mainStyles.pageView} />
+        ])
+    }
+
     _renderItemButton(text, index) {
         return (
             <TouchableOpacity
                 key={index}
                 onPress={() => {
-                    this.refs.scrollView.scrollTo({ x: index * windowWidth, y: 0, animated: true })
+                    if (Platform.OS == 'android') {
+                        this.refs.viewPager.setPage(index)
+                    } else {
+                        this.refs.scrollView.scrollTo({ x: index * windowWidth, y: 0, animated: true })
+                    }
                 } }
                 >
                 <View

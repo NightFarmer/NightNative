@@ -18,8 +18,11 @@ export default class MainFunctionGrid extends Component {
 
     constructor(props) {
         super(props);
+        if(props.resetState){
+            this.resetTouchState()
+        }
         let eleList = this.props.dataList.map((v, i) => {
-            console.info(v, i)
+            // console.info(v, i)
             return {
                 data: v,
                 marginLeft: new Animated.Value(i % 3 * boxSize),
