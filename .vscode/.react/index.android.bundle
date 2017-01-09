@@ -90747,6 +90747,7 @@ var _reactNative=require(42 /* react-native */);
 
 
 
+
 var boxSize=_reactNative.Dimensions.get('window').width/3;var
 
 MainFunctionGrid=function(_Component){babelHelpers.inherits(MainFunctionGrid,_Component);
@@ -90867,7 +90868,8 @@ if(this._touchTime>0&&new Date().getTime()-this._touchTime>500){
 
 return true;
 }
-if(gestureState.dy>0||gestureState.dx>0){
+console.info(gestureState.dy);
+if(gestureState.dy!=0||gestureState.dx!=0){
 this.resetTouchState(" move ");
 }
 return false;
@@ -90888,11 +90890,11 @@ console.info('b');
 console.info('c');
 node.zIndex=_this4.maxzIndex++;
 _this4.setState({scrollEnabled:false});
-
 if(_this4.props.onDragStart){
 _this4.props.onDragStart();
 }
-_reactNative.ToastAndroid.show('ok',_reactNative.ToastAndroid.SHORT);
+_reactNative.Vibration.vibrate(50);
+
 },500);
 }},{key:'resetTouchState',value:function resetTouchState(
 

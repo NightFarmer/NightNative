@@ -133,7 +133,7 @@ export default class MainFunctionGrid extends Component {
             //开始拦截拖拽事件
             return true
         }
-        if (gestureState.dy > 0 || gestureState.dx > 0) {
+        if (gestureState.dy != 0 || gestureState.dx != 0) {
             this.resetTouchState(" move ")
         }
         return false
