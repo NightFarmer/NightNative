@@ -33,7 +33,9 @@ export default class MainPage extends Component {
         super(props);
         this.state = {
             scrollEnabled: true,
-            resetMainPageState: false
+            resetMainPageState: false,
+            titleStr: "标题0",
+            currentPageIndex: 0,
         }
     }
 
@@ -56,7 +58,7 @@ export default class MainPage extends Component {
                             fontSize: 20,
 
                         }}
-                        >标题</Text>
+                        >{this.state.titleStr}</Text>
                 </View>
                 {Platform.OS == 'android' ?
                     <ViewPagerAndroid
@@ -66,6 +68,12 @@ export default class MainPage extends Component {
                         initialPage={0}
                         onPageScroll={(evt) => {
                             this.setState({ resetMainPageState: true });
+                        } }
+                        onPageSelected={(event) => {
+                            let index = event.nativeEvent.position
+                            if (this.state.currentPageIndex != index) {
+                                this.setState({ titleStr: "标题" + index, currentPageIndex: index });
+                            }
                         } }
                         >
                         {this._renderPagerViews()}
@@ -80,6 +88,15 @@ export default class MainPage extends Component {
                         onScroll={(evt) => {
                             console.info(this.refs.length)
                             this.refs.mainGrid.resetGridViewTouchState("bb")
+
+                            let offset = e.nativeEvent.contentOffset.x;
+                            // console.info(offset)
+                            let p = Math.floor(offset / windowWidth)
+                            let x = Math.round((offset % windowWidth) / windowWidth)
+                            let index = p + x
+                            if (this.state.currentPageIndex != index) {
+                                this.setState({ titleStr: "标题" + (p + x), currentPageIndex: index });
+                            }
                         } }
                         showsHorizontalScrollIndicator={false}
                         >
@@ -131,6 +148,9 @@ export default class MainPage extends Component {
             <TouchableOpacity
                 key={index}
                 onPress={() => {
+                    if (this.state.currentPageIndex != index) {
+                        this.setState({ titleStr: "标题" + index, currentPageIndex: index });
+                    }
                     if (Platform.OS == 'android') {
                         this.refs.viewPager.setPage(index)
                     } else {
