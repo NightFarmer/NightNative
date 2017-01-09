@@ -63,11 +63,23 @@ export default class MainPage extends Component {
                 {Platform.OS == 'android' ?
                     <ViewPagerAndroid
                         ref="viewPager"
-                        scrollEnabled={this.state.scrollEnabled}
+                        // scrollEnabled={this.state.scrollEnabled}  //viewPager在子view处理触摸事件后会默认释放拦截
                         style={{ flex: 1 }}
                         initialPage={0}
                         onPageScroll={(evt) => {
-                            this.setState({ resetMainPageState: true });
+                            console.info('page move ...' + evt.nativeEvent.position + "  " + evt.nativeEvent.offset)
+                            if (evt.nativeEvent.offset == 0 && this.state.resetMainPageState) {
+                                this.setState({ resetMainPageState: false });
+                            }
+                            if (evt.nativeEvent.offset != 0 && !this.state.resetMainPageState) {
+                                this.setState({ resetMainPageState: true });
+                            }
+                        } }
+                        onPageScrollStateChanged={(state) => {
+                            console.info(state)
+                            if ('idle' == state && this.state.resetMainPageState) {
+                                this.setState({ resetMainPageState: false });
+                            }
                         } }
                         onPageSelected={(event) => {
                             let index = event.nativeEvent.position

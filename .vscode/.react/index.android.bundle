@@ -90746,6 +90746,7 @@ var _reactNative=require(42 /* react-native */);
 
 
 
+
 var boxSize=_reactNative.Dimensions.get('window').width/3;var
 
 MainFunctionGrid=function(_Component){babelHelpers.inherits(MainFunctionGrid,_Component);
@@ -90848,34 +90849,50 @@ props));_this.maxzIndex=1;_this.
 
 
 
+
+
+
+
+
+
+
 _touchTimer=null;_this.
 
 _touchTime=-1;if(props.resetState){_this.resetTouchState();}var eleList=_this.props.dataList.map(function(v,i){return{data:v,marginLeft:new _reactNative.Animated.Value(i%3*boxSize),marginTop:new _reactNative.Animated.Value(Math.floor(i/3)*boxSize),marginLeftStatic:i%3*boxSize,marginTopStatic:Math.floor(i/3)*boxSize,moveX:0,moveY:0,zIndex:0,index:i};});_this.state={dataList:eleList,scrollEnabled:true};return _this;}babelHelpers.createClass(MainFunctionGrid,[{key:'render',value:function render(){var _this2=this;return _react2.default.createElement(_reactNative.ScrollView,{scrollEnabled:this.state.scrollEnabled,style:this.props.style,onScroll:function onScroll(){_this2._touchTime=-1;}},_react2.default.createElement(_reactNative.View,{style:{height:this.calcListHeight()}},this.renderCells()));}},{key:'calcListHeight',value:function calcListHeight(){var listHeight=Math.ceil(this.state.dataList.length/3)*boxSize;return listHeight;}},{key:'renderCells',value:function renderCells(){var _this3=this;return this.state.dataList.map(function(d){return _react2.default.createElement(_reactNative.Animated.View,babelHelpers.extends({ref:function ref(v){d.viewRef=v;},style:[myStyles.box,{zIndex:d.zIndex,marginLeft:d.marginLeft,marginTop:d.marginTop}],key:d.data},_this3.newPanResponder(d).panHandlers),_this3.props.renderItem(d.data,d.index));});}},{key:'findNodeByIndex',value:function findNodeByIndex(index){var dataList=this.state.dataList;for(var i=0;i<dataList.length;i++){if(dataList[i].index==index){return dataList[i];}}}},{key:'_setMarginWithAnim',value:function _setMarginWithAnim(node,duration){node.marginLeftStatic=node.index%3*boxSize;node.marginTopStatic=Math.floor(node.index/3)*boxSize;_reactNative.Animated.parallel([_reactNative.Animated.timing(node.marginLeft,{toValue:node.marginLeftStatic,duration:duration}),_reactNative.Animated.timing(node.marginTop,{toValue:node.marginTopStatic,duration:duration})]).start();}},{key:'judgeMoveItem',value:function judgeMoveItem(
 
-node){
+node,gestureState){
 
 if(this._touchTime>0&&new Date().getTime()-this._touchTime>500){
 
 
 return true;
 }
+if(gestureState.dy>0||gestureState.dx>0){
 this.resetTouchState(" move ");
+}
 return false;
 }},{key:'_setNodeDragTimer',value:function _setNodeDragTimer(
 
 node){var _this4=this;
 if(this._touchTime>0)return;
-console.info(this._touchTime,"set timer");
 this._touchTime=new Date().getTime();
 this._touchTimer=setTimeout(function(){
+if(_this4.props.resetState){
+_this4.resetTouchState();
+return;
+}
+console.info('a');
 if(_this4._touchTime==-1)return;
+console.info('b');
+
+console.info('c');
 node.zIndex=_this4.maxzIndex++;
 _this4.setState({scrollEnabled:false});
 
 if(_this4.props.onDragStart){
-console.info(" no ");
 _this4.props.onDragStart();
 }
+_reactNative.ToastAndroid.show('ok',_reactNative.ToastAndroid.SHORT);
 },500);
 }},{key:'resetTouchState',value:function resetTouchState(
 
@@ -90886,7 +90903,7 @@ clearTimeout(this._touchTimer);
 this._touchTime=-1;
 this.setState({scrollEnabled:true});
 if(this.props.onDragEnd){
-console.info(" yes ",msg);
+
 this.props.onDragEnd();
 }
 }},{key:'newPanResponder',value:function newPanResponder(
@@ -90912,13 +90929,13 @@ onMoveShouldSetPanResponder:function onMoveShouldSetPanResponder(evt,gestureStat
 
 
 
-return _this5.judgeMoveItem(node);
+return _this5.judgeMoveItem(node,gestureState);
 },
 onMoveShouldSetPanResponderCapture:function onMoveShouldSetPanResponderCapture(evt,gestureState){
 
 
 
-return _this5.judgeMoveItem(node);
+return _this5.judgeMoveItem(node,gestureState);
 },
 
 onPanResponderGrant:function onPanResponderGrant(evt,gestureState){
@@ -90931,15 +90948,16 @@ onPanResponderMove:function onPanResponderMove(evt,gestureState){
 
 
 
-node.moveX+=gestureState.dx;
-node.moveY+=gestureState.dy;
+node.moveX=gestureState.dx;
+node.moveY=gestureState.dy;
 var newLeft=node.marginLeftStatic+node.moveX;
 var newTop=node.marginTopStatic+node.moveY;
 
-node.marginLeft.setValue(newLeft);
-node.marginTop.setValue(newTop);
 
-console.info(node.viewRef);
+
+
+
+node.viewRef;
 
 var selfIndex=node.index;
 var currentIndex=Math.floor((newTop+boxSize/2)/boxSize)*3+Math.floor((newLeft+boxSize/2)/boxSize);
@@ -90963,7 +90981,11 @@ _this5._setMarginWithAnim(_moveNode,250);
 }
 node.index=currentIndex;
 }
-_this5.setState({});
+
+
+
+node.marginLeft.setValue(newLeft);
+node.marginTop.setValue(newTop);
 },
 onPanResponderTerminationRequest:function onPanResponderTerminationRequest(evt,gestureState){return false;},
 onPanResponderRelease:function onPanResponderRelease(evt,gestureState){
@@ -91038,7 +91060,9 @@ function MainPage(props){babelHelpers.classCallCheck(this,MainPage);var _this=ba
 props));_this.itemList=['A','B','C','D'];
 _this.state={
 scrollEnabled:true,
-resetMainPageState:false};return _this;
+resetMainPageState:false,
+titleStr:"标题0",
+currentPageIndex:0};return _this;
 
 }babelHelpers.createClass(MainPage,[{key:'render',value:function render()
 
@@ -91058,19 +91082,37 @@ justifyContent:'center'}},
 _react2.default.createElement(_reactNative.Text,{
 style:{
 color:'#FFFFFF',
-fontSize:20}},'\u6807\u9898')),
+fontSize:20}},
 
 
-
+this.state.titleStr)),
 
 _reactNative.Platform.OS=='android'?
 _react2.default.createElement(_reactNative.ViewPagerAndroid,{
 ref:'viewPager',
-scrollEnabled:this.state.scrollEnabled,
+
 style:{flex:1},
 initialPage:0,
 onPageScroll:function onPageScroll(evt){
+console.info('page move ...'+evt.nativeEvent.position+"  "+evt.nativeEvent.offset);
+if(evt.nativeEvent.offset==0&&_this2.state.resetMainPageState){
+_this2.setState({resetMainPageState:false});
+}
+if(evt.nativeEvent.offset!=0&&!_this2.state.resetMainPageState){
 _this2.setState({resetMainPageState:true});
+}
+},
+onPageScrollStateChanged:function onPageScrollStateChanged(state){
+console.info(state);
+if('idle'==state&&_this2.state.resetMainPageState){
+_this2.setState({resetMainPageState:false});
+}
+},
+onPageSelected:function onPageSelected(event){
+var index=event.nativeEvent.position;
+if(_this2.state.currentPageIndex!=index){
+_this2.setState({titleStr:"标题"+index,currentPageIndex:index});
+}
 }},
 
 this._renderPagerViews()):
@@ -91085,6 +91127,15 @@ horizontal:true,
 onScroll:function onScroll(evt){
 console.info(_this2.refs.length);
 _this2.refs.mainGrid.resetGridViewTouchState("bb");
+
+var offset=e.nativeEvent.contentOffset.x;
+
+var p=Math.floor(offset/windowWidth);
+var x=Math.round(offset%windowWidth/windowWidth);
+var index=p+x;
+if(_this2.state.currentPageIndex!=index){
+_this2.setState({titleStr:"标题"+(p+x),currentPageIndex:index});
+}
 },
 showsHorizontalScrollIndicator:false},
 
@@ -91136,6 +91187,9 @@ return(
 _react2.default.createElement(_reactNative.TouchableOpacity,{
 key:index,
 onPress:function onPress(){
+if(_this4.state.currentPageIndex!=index){
+_this4.setState({titleStr:"标题"+index,currentPageIndex:index});
+}
 if(_reactNative.Platform.OS=='android'){
 _this4.refs.viewPager.setPage(index);
 }else{

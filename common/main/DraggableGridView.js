@@ -9,6 +9,8 @@ import {
     Animated,
     PanResponder,
     TouchableOpacity,
+    ToastAndroid,
+    Vibration,
 } from 'react-native';
 
 let boxSize = Dimensions.get('window').width / 3
@@ -42,6 +44,13 @@ export default class MainFunctionGrid extends Component {
     }
 
     render() {
+        // console.info('pagere set clean ', this.props.resetState)
+        // if (this.props.resetState) {
+        //     if (this._touchTimer) {
+        //         clearTimeout(this._touchTimer)
+        //     }
+        //     this._touchTime = -1
+        // }
         return (
             <ScrollView
                 scrollEnabled={this.state.scrollEnabled}
@@ -117,30 +126,39 @@ export default class MainFunctionGrid extends Component {
 
     _touchTime = -1
 
-    judgeMoveItem(node) {
+    judgeMoveItem(node, gestureState) {
         // console.info(this._touchTime, new Date().getTime() - this._touchTime)
         if (this._touchTime > 0 && new Date().getTime() - this._touchTime > 500) {
             //准备拖拽环境
             //开始拦截拖拽事件
             return true
         }
-        this.resetTouchState(" move ")
+        if (gestureState.dy > 0 || gestureState.dx > 0) {
+            this.resetTouchState(" move ")
+        }
         return false
     }
 
     _setNodeDragTimer(node) {
         if (this._touchTime > 0) return;
-        console.info(this._touchTime, "set timer")
         this._touchTime = new Date().getTime()
         this._touchTimer = setTimeout(() => {
+            if (this.props.resetState) {//viewpager不能在翻页时取消长摁监听，所以在定时器触发时动态判断翻页状态，iOS使用scrollview不存在此问题
+                this.resetTouchState()
+                return
+            }
+            console.info('a')
             if (this._touchTime == -1) return;
+            console.info('b')
+            // if (this.props.resetState) return;
+            console.info('c')
             node.zIndex = this.maxzIndex++
             this.setState({ scrollEnabled: false });
-            // vibrate(100)
             if (this.props.onDragStart) {
-                console.info(" no ")
                 this.props.onDragStart()
             }
+            Vibration.vibrate(50)
+            // ToastAndroid.show('ok', ToastAndroid.SHORT)
         }, 500);
     }
 
@@ -177,13 +195,13 @@ export default class MainFunctionGrid extends Component {
                 // console.info('onMoveShouldSetPanResponder')
                 // this._clearNodeDragTimer(node)
                 // return node.moveable
-                return this.judgeMoveItem(node)
+                return this.judgeMoveItem(node, gestureState)
             },
             onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
                 // console.info('onMoveShouldSetPanResponderCapture', node.moveable, " #")
                 // this._clearNodeDragTimer(node)
                 // return node.moveable
-                return this.judgeMoveItem(node)
+                return this.judgeMoveItem(node, gestureState)
             },
 
             onPanResponderGrant: (evt, gestureState) => {
