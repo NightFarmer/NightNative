@@ -1702,10 +1702,11 @@ var _testXin=require(560 /* ./mytest/testXin */);var _testXin2=babelHelpers.inte
 var _testScrollView=require(561 /* ./mytest/testScrollView */);var _testScrollView2=babelHelpers.interopRequireDefault(_testScrollView);
 var _testScrollView3=require(562 /* ./mytest/testScrollView2 */);var _testScrollView4=babelHelpers.interopRequireDefault(_testScrollView3);
 var _MainFunctionGrid=require(563 /* ./common/MainFunctionGrid */);var _MainFunctionGrid2=babelHelpers.interopRequireDefault(_MainFunctionGrid);
-var _MainPage=require(566 /* ./common/MainPage */);var _MainPage2=babelHelpers.interopRequireDefault(_MainPage);var NightNative=function(_Component){babelHelpers.inherits(NightNative,_Component);function NightNative(props){babelHelpers.classCallCheck(this,NightNative);var _this=babelHelpers.possibleConstructorReturn(this,(NightNative.__proto__||Object.getPrototypeOf(NightNative)).call(this,props));_this.state={showText:true,myTest:'default'};setInterval(function(){_this.setState({showText:!_this.state.showText});},1000);return _this;}babelHelpers.createClass(NightNative,[{key:'render',value:function render(){var _this2=this;return _react2.default.createElement(_reactNative.View,{style:styles.container},_react2.default.createElement(_reactNative.Text,{style:styles.welcome},'Welcome to React Native!2'),_react2.default.createElement(_reactNative.Text,{style:styles.instructions},'To get started, edit index.android.js'),_react2.default.createElement(_reactNative.Text,{style:styles.instructions},'Double tap R on your keyboard to reload,','\n','Shake or press menu button for dev menu'),_react2.default.createElement(_reactNative.Text,null,'\u591A\u884C\u7684\n'+(1+2)+'\n\u5B57\u7B26\u4E32\n          \'\u5F15\u53F7\',  `\u53CD\u5F15\u53F7`, '+"hehe".length+'\n'),_react2.default.createElement(_reactNative.Text,null,'\u591A\u884C\u7684',1+3,'\u5B57\u7B26\u4E32 ',this.state.myTest),_react2.default.createElement(_reactNative.Text,null,'123',''+this.state.showText),_react2.default.createElement(_testFlex2.default,null),_react2.default.createElement(_reactNative.TextInput,{style:{alignSelf:'stretch'},placeholder:'yooooo',onChangeText:function onChangeText(text){_this2.setState({myTest:text});}}));}}]);return NightNative;}(_react.Component);exports.default=NightNative;_reactNative.Text.prototype.render=_lodash2.default.wrap(_reactNative.Text.prototype.render,function(func){for(var _len=arguments.length,args=Array(_len>1?_len-1:0),_key=1;_key<_len;_key++){args[_key-1]=arguments[_key];}var originText=func.apply(this,args);return _react2.default.cloneElement(originText,{style:[originText.props.style,styles.defaultFontFamily]});});var styles=_reactNative.StyleSheet.create({defaultFontFamily:{fontFamily:'xmlt'},container:{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'#F5FCFF'},welcome:{fontSize:20,color:"#FF0000",textAlign:'center',margin:10},instructions:{textAlign:'center',color:'#333333',marginBottom:5}});
+var _MainPage=require(566 /* ./common/MainPage */);var _MainPage2=babelHelpers.interopRequireDefault(_MainPage);
+var _LoginPage=require(570 /* ./common/LoginPage */);var _LoginPage2=babelHelpers.interopRequireDefault(_LoginPage);var NightNative=function(_Component){babelHelpers.inherits(NightNative,_Component);function NightNative(props){babelHelpers.classCallCheck(this,NightNative);var _this=babelHelpers.possibleConstructorReturn(this,(NightNative.__proto__||Object.getPrototypeOf(NightNative)).call(this,props));_this.state={showText:true,myTest:'default'};setInterval(function(){_this.setState({showText:!_this.state.showText});},1000);return _this;}babelHelpers.createClass(NightNative,[{key:'render',value:function render(){var _this2=this;return _react2.default.createElement(_reactNative.View,{style:styles.container},_react2.default.createElement(_reactNative.Text,{style:styles.welcome},'Welcome to React Native!2'),_react2.default.createElement(_reactNative.Text,{style:styles.instructions},'To get started, edit index.android.js'),_react2.default.createElement(_reactNative.Text,{style:styles.instructions},'Double tap R on your keyboard to reload,','\n','Shake or press menu button for dev menu'),_react2.default.createElement(_reactNative.Text,null,'\u591A\u884C\u7684\n'+(1+2)+'\n\u5B57\u7B26\u4E32\n          \'\u5F15\u53F7\',  `\u53CD\u5F15\u53F7`, '+"hehe".length+'\n'),_react2.default.createElement(_reactNative.Text,null,'\u591A\u884C\u7684',1+3,'\u5B57\u7B26\u4E32 ',this.state.myTest),_react2.default.createElement(_reactNative.Text,null,'123',''+this.state.showText),_react2.default.createElement(_testFlex2.default,null),_react2.default.createElement(_reactNative.TextInput,{style:{alignSelf:'stretch'},placeholder:'yooooo',onChangeText:function onChangeText(text){_this2.setState({myTest:text});}}));}}]);return NightNative;}(_react.Component);exports.default=NightNative;_reactNative.Text.prototype.render=_lodash2.default.wrap(_reactNative.Text.prototype.render,function(func){for(var _len=arguments.length,args=Array(_len>1?_len-1:0),_key=1;_key<_len;_key++){args[_key-1]=arguments[_key];}var originText=func.apply(this,args);return _react2.default.cloneElement(originText,{style:[originText.props.style,styles.defaultFontFamily]});});var styles=_reactNative.StyleSheet.create({defaultFontFamily:{fontFamily:'xmlt'},container:{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'#F5FCFF'},welcome:{fontSize:20,color:"#FF0000",textAlign:'center',margin:10},instructions:{textAlign:'center',color:'#333333',marginBottom:5}});
 
 
-_reactNative.AppRegistry.registerComponent('NightNative',function(){return _MainPage2.default;});
+_reactNative.AppRegistry.registerComponent('NightNative',function(){return _LoginPage2.default;});
 }, 0, null, "NightNative/index.android.js");
 __d(/* react/react.js */function(global, require, module, exports) {'use strict';
 
@@ -90868,7 +90869,6 @@ if(this._touchTime>0&&new Date().getTime()-this._touchTime>500){
 
 return true;
 }
-console.info(gestureState.dy);
 if(gestureState.dy!=0||gestureState.dx!=0){
 this.resetTouchState(" move ");
 }
@@ -91325,6 +91325,113 @@ var styles=_reactNative.StyleSheet.create({
 container:{
 backgroundColor:"#122F5588"}});
 }, 569, null, "NightNative/common/AboutMe.js");
+__d(/* NightNative/common/LoginPage.js */function(global, require, module, exports) {Object.defineProperty(exports,"__esModule",{value:true});var _react=require(12 /* react */);var _react2=babelHelpers.interopRequireDefault(_react);
+var _reactNative=require(42 /* react-native */);
+
+
+
+
+
+
+
+
+var loginUrl='http://120.27.107.170/yuerduo-front/loginapi/login';var
+
+LoginPage=function(_Component){babelHelpers.inherits(LoginPage,_Component);
+
+function LoginPage(props){babelHelpers.classCallCheck(this,LoginPage);var _this=babelHelpers.possibleConstructorReturn(this,(LoginPage.__proto__||Object.getPrototypeOf(LoginPage)).call(this,
+props));
+_this.state={
+loginName:'',
+password:'',
+result:''};return _this;
+
+}babelHelpers.createClass(LoginPage,[{key:'render',value:function render()
+
+{var _this2=this;
+return(
+_react2.default.createElement(_reactNative.View,null,
+
+_react2.default.createElement(_reactNative.View,null,
+_react2.default.createElement(_reactNative.TextInput,{
+onChangeText:function onChangeText(text){return _this2.setState({loginName:text});}}),
+
+_react2.default.createElement(_reactNative.TextInput,{
+onChangeText:function onChangeText(text){return _this2.setState({password:text});}}),
+
+_react2.default.createElement(_reactNative.TouchableOpacity,{
+onPress:function onPress(){return _this2.login();}},
+
+_react2.default.createElement(_reactNative.Text,null,'\u767B\u5F55')),
+
+
+
+_react2.default.createElement(_reactNative.Text,null,
+this.state.result))));
+
+
+
+
+}},{key:'login',value:function login()
+
+{var _this3=this;
+console.info('login',this.state.loginName,this.state.password);
+
+var formData=new FormData();
+formData.append("username",this.state.loginName);
+formData.append("password",this.state.password);
+fetch(loginUrl,{
+method:'POST',
+body:formData}).
+
+then(function(response){
+console.info(response.status,response.ok);
+
+return response.json();
+}).
+then(function(jsonObj){
+console.info(jsonObj);
+return jsonObj;
+}).
+then(function(jsonObj){
+_this3.setState({result:JSON.stringify(jsonObj)});
+}).
+catch(function(error){console.info(error);});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}}]);return LoginPage;}(_react.Component);exports.default=LoginPage;
+}, 570, null, "NightNative/common/LoginPage.js");
 ;require(192);
 ;require(0);
 //# sourceMappingURL=index.android.map

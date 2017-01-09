@@ -111,6 +111,7 @@ import myScrollView from './mytest/testScrollView'//仿viewpager
 import myScrollView2 from './mytest/testScrollView2'//测试拖拽
 import MainFunctionGrid from './common/MainFunctionGrid'
 import MainPage from './common/MainPage'
+import LoginPage from './common/LoginPage'
 
 // AppRegistry.registerComponent('NightNative', () => NightNative);
-AppRegistry.registerComponent('NightNative', () => MainPage);
+AppRegistry.registerComponent('NightNative', () => LoginPage);
