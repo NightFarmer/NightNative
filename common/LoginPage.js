@@ -5,8 +5,12 @@ import {
     TextInput,
     StyleSheet,
     TouchableOpacity,
+    AsyncStorage,
 } from 'react-native';
 
+import CommonTopBar from './wedget/CommonTopBar'
+import CommonButton from './wedget/CommonButton'
+import ProgressDialog from './wedget/ProgressDialog'
 
 let loginUrl = 'http://120.27.107.170/yuerduo-front/loginapi/login'
 
@@ -19,12 +23,24 @@ export default class LoginPage extends Component {
             password: '',
             result: ''
         }
+
+        // AsyncStorage.getItem('loginUser', (error, result) => {
+        //     console.info(error)
+        //     this.setState({ result: result });
+        // })
+        AsyncStorage.getItem('loginUser')
+            .then((value) => this.setState({ result: value }))
+            .catch((error) => console.info(error))
     }
 
     render() {
         return (
             <View>
-
+                <CommonTopBar
+                    title='登录'
+                    noBack={true}
+                    // rightButtonText='注册'
+                    />
                 <View>
                     <TextInput
                         onChangeText={(text) => this.setState({ loginName: text })}
@@ -32,17 +48,14 @@ export default class LoginPage extends Component {
                     <TextInput
                         onChangeText={(text) => this.setState({ password: text })}
                         ></TextInput>
-                    <TouchableOpacity
+                    <CommonButton
                         onPress={() => this.login()}
-                        >
-                        <Text>
-                            登录
-                        </Text>
-                    </TouchableOpacity>
+                        />
                     <Text>
                         {this.state.result}
                     </Text>
                 </View>
+                <ProgressDialog />
             </View>
         )
     }
@@ -67,6 +80,9 @@ export default class LoginPage extends Component {
                 return jsonObj
             })
             .then((jsonObj) => {
+                if (jsonObj.result != 0) {
+                    AsyncStorage.setItem('loginUser', JSON.stringify(jsonObj.data[0]))
+                }
                 this.setState({ result: JSON.stringify(jsonObj) });
             })
             .catch((error) => { console.info(error) })
@@ -105,3 +121,4 @@ export default class LoginPage extends Component {
         //     .catch((error) => { console.info(error) })
     }
 }
+
