@@ -223,7 +223,7 @@ export default class MainFunctionGrid extends Component {
 
 
                 // console.info()
-                node.viewRef
+                // node.viewRef
 
                 let selfIndex = node.index
                 let currentIndex = Math.floor((newTop + boxSize / 2) / boxSize) * 3 + Math.floor((newLeft + boxSize / 2) / boxSize)

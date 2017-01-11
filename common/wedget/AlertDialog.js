@@ -8,9 +8,25 @@ import {
 
 import BaseDialog from './BaseDialog'
 
-export default class ProgressDialog extends BaseDialog {
+export default class AlertDialog extends BaseDialog {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            ...this.state,
+            msg: ''
+        }
+    }
+
+    // componentWillMount() {
+    //     // if (this.props.show) {
+    //     //     this.show(this.props.msg)
+    //     // }
+    //     console.info('willmount')
+    // }
 
     renderDialog() {
+        console.info('renderDialog', this.state.msg)
         return (
             <View
                 style={[styles.content, {
@@ -19,10 +35,16 @@ export default class ProgressDialog extends BaseDialog {
                 onStartShouldSetResponder={() => true}
                 >
                 <Text>
-                    1123
+                    {this.state.msg}
                 </Text>
             </View>
         )
+    }
+
+    show(msg) {
+        console.info('show', msg)
+        this.setState({ msg: msg });
+        super.show()
     }
 
 }
