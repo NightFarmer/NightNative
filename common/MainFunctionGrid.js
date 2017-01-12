@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import DraggableGridView from './main/DraggableGridView'
-import TestFuncPage from './TestFuncPage'
+import MessageListPage from './function/MessageListPage'
 
 let iconSize = Dimensions.get('window').width / 3 / 2.5
 
@@ -56,7 +56,7 @@ export default class MainFunctionGrid extends Component {
                     console.info('onclick..' + itemData)
                     this.resetGridViewTouchState("aa")
                     this.props.navigator.push({
-                        component: TestFuncPage,
+                        component: MessageListPage,
                         params: {
                             title: '测试'
                         }
@@ -84,7 +84,7 @@ export default class MainFunctionGrid extends Component {
 
 const myStyles = StyleSheet.create({
     text: {
-        color: "#ff0000",
+        color: "#656565",
         fontSize: 16,
         marginTop: 5
     },

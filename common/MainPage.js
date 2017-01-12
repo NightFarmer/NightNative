@@ -24,10 +24,10 @@ let windowWidth = Dimensions.get('window').width
 export default class MainPage extends Component {
 
     itemList = [
-        'A',
-        'B',
-        'C',
-        'D'
+        '首页',
+        '通讯录',
+        '功能',
+        '我'
     ]
 
     constructor(props) {
@@ -49,7 +49,7 @@ export default class MainPage extends Component {
             }}>
                 <View
                     style={{
-                        backgroundColor: '#7777FF',
+                        backgroundColor: '#37ACFE',
                         height: 50,
                         alignItems: 'center',
                         justifyContent: 'center'
@@ -123,7 +123,7 @@ export default class MainPage extends Component {
                         alignItems: 'center',
                         justifyContent: 'space-around',
                         flexDirection: 'row',
-                        borderTopColor: '#ff0000',
+                        borderTopColor: '#F2F1F2',
                         borderTopWidth: 1,
                         height: 62
                     }}>
@@ -216,5 +216,7 @@ const mainStyles = StyleSheet.create({
     iconLabel: {
         marginTop: 2,
         fontSize: 15,
+        color: '#999999',
+        //#38ADFF
     }
 })

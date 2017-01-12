@@ -17,7 +17,7 @@ export default class CommonTopBar extends Component {
         if (this.props.height) {
             Height = this.props.height
         }
-        let BackgroundColor = '#8888ff'
+        let BackgroundColor = '#37ACFE'
         if (this.props.backgroundColor) {
             BackgroundColor = this.props.backgroundColor
         }
