@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import DraggableGridView from './main/DraggableGridView'
+import TestFuncPage from './TestFuncPage'
 
 let iconSize = Dimensions.get('window').width / 3 / 2.5
 
@@ -54,6 +55,12 @@ export default class MainFunctionGrid extends Component {
                 onPress={() => {
                     console.info('onclick..' + itemData)
                     this.resetGridViewTouchState("aa")
+                    this.props.navigator.push({
+                        component: TestFuncPage,
+                        params: {
+                            title: '测试'
+                        }
+                    })
                 } } >
                 <View
                     style={{

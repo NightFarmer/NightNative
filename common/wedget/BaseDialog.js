@@ -57,26 +57,27 @@ export default class BaseDialog extends Component {
     show() {
         if (!this.state.show) {
             this.setState({ show: true });
-        }
-        this.state.fadeAnim.setValue(0)
-        this.state.dialogFadeAnim.setValue(1.3)
 
-        Animated.parallel([
-            Animated.timing(          // Uses easing functions
-                this.state.fadeAnim,    // The value to drive
-                {
-                    toValue: 1,
-                    duration: 300
-                },           // Configuration
-            ),
-            Animated.timing(          // Uses easing functions
-                this.state.dialogFadeAnim,    // The value to drive
-                {
-                    toValue: 1,
-                    duration: 300
-                },           // Configuration
-            )
-        ]).start()
+            this.state.fadeAnim.setValue(0)
+            this.state.dialogFadeAnim.setValue(1.3)
+
+            Animated.parallel([
+                Animated.timing(          // Uses easing functions
+                    this.state.fadeAnim,    // The value to drive
+                    {
+                        toValue: 1,
+                        duration: 300
+                    },           // Configuration
+                ),
+                Animated.timing(          // Uses easing functions
+                    this.state.dialogFadeAnim,    // The value to drive
+                    {
+                        toValue: 1,
+                        duration: 300
+                    },           // Configuration
+                )
+            ]).start()
+        }
     }
 
     dismiss() {

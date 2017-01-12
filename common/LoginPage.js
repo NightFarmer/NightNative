@@ -12,6 +12,7 @@ import CommonTopBar from './wedget/CommonTopBar'
 import CommonButton from './wedget/CommonButton'
 import ProgressDialog from './wedget/ProgressDialog'
 import AlertDialog from './wedget/AlertDialog'
+import MainPage from './MainPage'
 
 let loginUrl = 'http://120.27.107.170/yuerduo-front/loginapi/login'
 
@@ -41,10 +42,11 @@ export default class LoginPage extends Component {
             <View>
                 <CommonTopBar
                     title='登录'
+                    {...this.props}
                     noBack={true}
                     // rightButtonText='注册'
                     />
-                <View>
+                <View style={{ backgroundColor: '#FFFFFF' }}>
                     <TextInput
                         onChangeText={(text) => this.setState({ loginName: text })}
                         ></TextInput>
@@ -58,7 +60,6 @@ export default class LoginPage extends Component {
                         {this.state.result}
                     </Text>
                 </View>
-                <AlertDialog ref='dlg0' />
                 <AlertDialog ref='dlg' />
             </View>
         )
@@ -90,6 +91,13 @@ export default class LoginPage extends Component {
             .then((jsonObj) => {
                 if (jsonObj.result != 0) {
                     AsyncStorage.setItem('loginUser', JSON.stringify(jsonObj.data[0]))
+                    const {navigator} = this.props
+                    navigator.resetTo({
+                        title: '',
+                        component: MainPage,
+                        params: {}
+                    })
+                    return
                 }
                 this.setState({ result: JSON.stringify(jsonObj) });
                 // this.refs.dlg0.dismiss()
@@ -133,6 +141,14 @@ export default class LoginPage extends Component {
         //     })
         //     .then((jsonObj) => console.info(jsonObj))
         //     .catch((error) => { console.info(error) })
+    }
+
+    componentWillMount() {
+        BackAndroidHelper.register(this.props.navigator)
+    }
+
+    componentWillUnmount() {
+        BackAndroidHelper.unRegister()
     }
 }
 

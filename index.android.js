@@ -113,5 +113,7 @@ import MainFunctionGrid from './common/MainFunctionGrid'
 import MainPage from './common/MainPage'
 import LoginPage from './common/LoginPage'
 
+import App from './common/App'
+
 // AppRegistry.registerComponent('NightNative', () => NightNative);
-AppRegistry.registerComponent('NightNative', () => LoginPage);
+AppRegistry.registerComponent('NightNative', () => App);

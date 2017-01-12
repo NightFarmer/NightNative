@@ -15,6 +15,7 @@ import MainFunctionGrid from './MainFunctionGrid'
 import ContactsList from './ContactsList'
 import FunctionList from './FunctionList'
 import AboutMe from './AboutMe'
+import BackAndroidHelper from './android/BackAndroidHelper'
 
 
 let iconSize = 30
@@ -37,12 +38,14 @@ export default class MainPage extends Component {
             titleStr: "标题0",
             currentPageIndex: 0,
         }
+        console.info(this.props.navigator.getCurrentRoutes().length)
     }
 
     render() {
         return (
             <View style={{
                 flex: 1,
+                backgroundColor: '#FFFFFF'
             }}>
                 <View
                     style={{
@@ -148,7 +151,9 @@ export default class MainPage extends Component {
                         this.setState({ scrollEnabled: true });
                     }
                 } }
-                style={mainStyles.pageView} />,
+                style={mainStyles.pageView}
+                navigator={this.props.navigator}
+                />,
             <ContactsList key={1} style={mainStyles.pageView} />,
             <FunctionList key={2} style={mainStyles.pageView} />,
             <AboutMe key={3} style={mainStyles.pageView} />
@@ -186,6 +191,15 @@ export default class MainPage extends Component {
             </TouchableOpacity>
         )
     }
+
+    componentWillMount() {
+        BackAndroidHelper.register(this.props.navigator)
+    }
+
+    componentWillUnmount() {
+        BackAndroidHelper.unRegister()
+    }
+
 
 }
 

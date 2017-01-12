@@ -54,7 +54,7 @@ export default class CommonTopBar extends Component {
                         alignItems: 'center'
                     }}
                     onPress={() => {
-
+                        this.props.navigator.pop()
                     } }
                     >
                     <Image source={require('../resource/img/topbar_icon_back_normal.png')} style={styles.backIcon} />
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         color: "#FFFFFF"
     },
     backIcon: {
-        width: 12,
-        height: 25,
+        width: 11,
+        height: 19.8,
     }
 })
