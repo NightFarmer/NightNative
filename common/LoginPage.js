@@ -39,7 +39,7 @@ export default class LoginPage extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{flex:1,backgroundColor:'#ffff99'}}>
                 <CommonTopBar
                     title='登录'
                     {...this.props}
@@ -48,9 +48,11 @@ export default class LoginPage extends Component {
                     />
                 <View style={{ backgroundColor: '#FFFFFF' }}>
                     <TextInput
+                        style={{width:100, height:100}}
                         onChangeText={(text) => this.setState({ loginName: text })}
-                        ></TextInput>
+                        ></TextInput>   
                     <TextInput
+                    style={{width:100, height:100}}
                         onChangeText={(text) => this.setState({ password: text })}
                         ></TextInput>
                     <CommonButton
