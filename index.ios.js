@@ -49,5 +49,5 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
-
-AppRegistry.registerComponent('NightNative', () => NightNative);
+import App from './common/App'
+AppRegistry.registerComponent('NightNative', () => App);

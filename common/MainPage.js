@@ -104,7 +104,7 @@ export default class MainPage extends Component {
                             console.info(this.refs.length)
                             this.refs.mainGrid.resetGridViewTouchState("bb")
 
-                            let offset = e.nativeEvent.contentOffset.x;
+                            let offset = evt.nativeEvent.contentOffset.x;
                             // console.info(offset)
                             let p = Math.floor(offset / windowWidth)
                             let x = Math.round((offset % windowWidth) / windowWidth)
@@ -140,7 +140,7 @@ export default class MainPage extends Component {
             <MainFunctionGrid
                 resetState={this.state.resetMainPageState}
                 key={0}
-                ref={(aaa) => { console.info(11111111111111111111111111) } }
+                ref='mainGrid'
                 onDragStart={() => {
                     if (this.state.scrollEnabled) {
                         this.setState({ scrollEnabled: false });
