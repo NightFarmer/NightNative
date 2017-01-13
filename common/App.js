@@ -6,12 +6,13 @@ import {
 } from 'react-native';
 
 import SplashPage from './SplashPage'
+import MLP from './function/MessageListPage4'
 
 export default class App extends Component {
 
     initialRoute = {
         title: 'login',
-        component: SplashPage
+        component: MLP
     }
 
     render() {

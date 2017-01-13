@@ -66,7 +66,8 @@ export default class CommonTopBar extends Component {
             <View style={{
                 height: Height,
                 backgroundColor: BackgroundColor,
-                flexDirection: 'row'
+                flexDirection: 'row',
+                zIndex: 100
             }}>
                 <View
                     style={[{ height: Height, position: 'absolute', width: windowWidth, justifyContent: 'center' }]}
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#FFFFFF"
     },
-    rightButton:{
+    rightButton: {
         alignSelf: 'center',
         fontSize: 14,
         color: "#FFFFFF"
