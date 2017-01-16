@@ -171,7 +171,7 @@ const RefreshControl2 = React.createClass({
 
 if (Platform.OS === 'ios') {
   var NativeRefreshControl2 = requireNativeComponent(
-    'RCTRefreshControl2',
+    'RCTRefreshControl',
     RefreshControl2
   );
 } else if (Platform.OS === 'android') {
