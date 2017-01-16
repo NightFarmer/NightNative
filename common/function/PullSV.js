@@ -47,7 +47,7 @@ export default class extends Component {
                             // console.info(this.refs.length)
                             // this.refs.mainGrid.resetGridViewTouchState("bb")
                             this.offset = evt.nativeEvent.contentOffset.y;
-                            // console.info('offset', this.offset)
+                            console.info('offset', this.offset)
                             if (this.offset == 0) {
                                 this.setState({ scrollEnabled: false });
                             }
