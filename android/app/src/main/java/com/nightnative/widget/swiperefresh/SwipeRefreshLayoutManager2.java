@@ -26,7 +26,9 @@ public class SwipeRefreshLayoutManager2 extends ViewGroupManager<ReactSwipeRefre
 
     @Override
     protected ReactSwipeRefreshLayout2 createViewInstance(ThemedReactContext reactContext) {
-        return new ReactSwipeRefreshLayout2(reactContext);
+        ReactSwipeRefreshLayout2 reactSwipeRefreshLayout2 = new ReactSwipeRefreshLayout2(reactContext);
+        reactSwipeRefreshLayout2.setHeadViewProvider(new MySwipeRefreshHead());
+        return reactSwipeRefreshLayout2;
     }
 
     @Override

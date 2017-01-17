@@ -8,15 +8,18 @@ package com.nightnative.widget.swiperefresh;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingChildHelper;
 import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.NestedScrollingParentHelper;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -306,7 +309,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
         mCircleHeight = (int) (CIRCLE_DIAMETER * metrics.density);
 
         createProgressView();
-        android.support.v4.view.ViewCompat.setChildrenDrawingOrderEnabled(this, true);
+        ViewCompat.setChildrenDrawingOrderEnabled(this, true);
         // the absolute offset has to take into account that the circle starts at an offset
         mSpinnerFinalOffset = DEFAULT_CIRCLE_TARGET * metrics.density;
         mTotalDragDistance = mSpinnerFinalOffset;
@@ -329,6 +332,21 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
             // Keep the children before the selected child the same
             return i;
         }
+    }
+
+    private View mHeadView;
+    private SwipeRefreshHeadProvider.HeadViewHolder mHeadViewHolder;
+    private SwipeRefreshHeadProvider headViewProvider;
+
+    private void setHeadView(View headView) {
+        this.mHeadView = headView;
+        addView(mHeadView);
+    }
+
+    public void setHeadViewProvider(SwipeRefreshHeadProvider headViewProvider) {
+        this.headViewProvider = headViewProvider;
+        this.mHeadViewHolder = headViewProvider.getHeadView(this);
+        setHeadView(mHeadViewHolder.headView);
     }
 
     private void createProgressView() {
@@ -412,8 +430,8 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
         if (isAlphaUsedForScale()) {
             setColorViewAlpha((int) (progress * MAX_ALPHA));
         } else {
-            android.support.v4.view.ViewCompat.setScaleX(mCircleView, progress);
-            android.support.v4.view.ViewCompat.setScaleY(mCircleView, progress);
+            ViewCompat.setScaleX(mCircleView, progress);
+            ViewCompat.setScaleY(mCircleView, progress);
         }
     }
 
@@ -453,7 +471,29 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
 //        });
 //        valueAnimator.start();
         //// TODO: 2017/1/16 0016 刷新结束动画
-        mTarget.animate().translationY(0).setDuration(SCALE_DOWN_DURATION).start();
+//        mTarget.animate().translationY(0).setDuration(SCALE_DOWN_DURATION).start();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mTarget, "translationY", 0)
+                .setDuration(SCALE_DOWN_DURATION);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                Float value = (Float) valueAnimator.getAnimatedValue();
+                mHeadViewHeight = (int) value.floatValue();
+                mHeadView.layout(0, 0, mHeadView.getMeasuredWidth(), mHeadViewHeight);
+//                mHeadView.setLayoutParams(mHeadView.getLayoutParams());
+                mHeadView.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth() - getPaddingLeft() - getPaddingRight(), MeasureSpec.EXACTLY),
+                        MeasureSpec.makeMeasureSpec(mHeadViewHeight, MeasureSpec.EXACTLY));
+                mHeadView.layout(0, 0, mHeadView.getMeasuredWidth(), mHeadViewHeight);
+                if (headViewProvider != null) {
+                    headViewProvider.onProgressChange(mHeadViewHolder, value / mTotalDragDistance, 2);
+                }
+            }
+        });
+        if (headViewProvider != null) {
+            headViewProvider.onProgressChange(mHeadViewHolder, 1, 2);
+        }
+        animator.setStartDelay(500);
+        animator.start();
     }
 
     private void startProgressAlphaStartAnimation() {
@@ -563,7 +603,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
         if (mTarget == null) {
             for (int i = 0; i < getChildCount(); i++) {
                 View child = getChildAt(i);
-                if (!child.equals(mCircleView)) {
+                if (!child.equals(mCircleView) && !child.equals(mHeadView)) {
                     mTarget = child;
                     break;
                 }
@@ -601,9 +641,17 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
         child.layout(childLeft, childTop, childLeft + childWidth, childTop + childHeight);
         int circleWidth = mCircleView.getMeasuredWidth();
         int circleHeight = mCircleView.getMeasuredHeight();
-        mCircleView.layout((width / 2 - circleWidth / 2), mCurrentTargetOffsetTop,
-                (width / 2 + circleWidth / 2), mCurrentTargetOffsetTop + circleHeight);
+//        mCircleView.layout((width / 2 - circleWidth / 2), mCurrentTargetOffsetTop,
+//                (width / 2 + circleWidth / 2), mCurrentTargetOffsetTop + circleHeight);
+
+        int headWidth = mHeadView.getMeasuredWidth();
+        int headHeight = mHeadView.getMeasuredHeight();
+        mHeadView.layout(0, 0, headWidth, mHeadViewHeight);
+//        mHeadView.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth() - getPaddingLeft() - getPaddingRight(), MeasureSpec.EXACTLY),
+//                MeasureSpec.makeMeasureSpec(mHeadViewHeight, MeasureSpec.EXACTLY));
     }
+
+    private int mHeadViewHeight = 0;
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -632,6 +680,10 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
                 break;
             }
         }
+//        mHeadView.setLayoutParams(mHeadView.getLayoutParams());
+        mHeadView.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth() - getPaddingLeft() - getPaddingRight(), MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(mHeadViewHeight, MeasureSpec.EXACTLY));
+//        mHeadView.layout(0, 0, mHeadView.getMeasuredWidth(), mHeadViewHeight);
     }
 
     /**
@@ -657,10 +709,10 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
                         && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
                         .getTop() < absListView.getPaddingTop());
             } else {
-                return android.support.v4.view.ViewCompat.canScrollVertically(mTarget, -1) || mTarget.getScrollY() > 0;
+                return ViewCompat.canScrollVertically(mTarget, -1) || mTarget.getScrollY() > 0;
             }
         } else {
-            return android.support.v4.view.ViewCompat.canScrollVertically(mTarget, -1);
+            return ViewCompat.canScrollVertically(mTarget, -1);
         }
     }
 
@@ -668,7 +720,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         ensureTarget();
 
-        final int action = android.support.v4.view.MotionEventCompat.getActionMasked(ev);
+        final int action = MotionEventCompat.getActionMasked(ev);
 
         if (mReturningToStart && action == MotionEvent.ACTION_DOWN) {
             mReturningToStart = false;
@@ -683,7 +735,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 setTargetOffsetTopAndBottom(mOriginalOffsetTop - mCircleView.getTop(), true);
-                mActivePointerId = android.support.v4.view.MotionEventCompat.getPointerId(ev, 0);
+                mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
                 mIsBeingDragged = false;
                 final float initialDownY = getMotionEventY(ev, mActivePointerId);
                 if (initialDownY == -1) {
@@ -705,6 +757,9 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
                     return false;
                 }
                 final float yDiff = y - mInitialDownY;
+                if (yDiff > mTouchSlop && !mIsBeingDragged && headViewProvider != null) {
+                    headViewProvider.onProgressChange(mHeadViewHolder, mTarget.getTranslationY() / mTotalDragDistance, 0);
+                }
                 if (yDiff > mTouchSlop && !mIsBeingDragged || mTarget.getTranslationY() > 0) {
                     if (mTarget.getTranslationY() > 0) {
                         mInitialMotionY = mInitialDownY;
@@ -717,7 +772,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
                 }
                 break;
 
-            case android.support.v4.view.MotionEventCompat.ACTION_POINTER_UP:
+            case MotionEventCompat.ACTION_POINTER_UP:
                 onSecondaryPointerUp(ev);
                 break;
 
@@ -732,11 +787,11 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
 
     private float getMotionEventY(MotionEvent ev, int activePointerId) {
-        final int index = android.support.v4.view.MotionEventCompat.findPointerIndex(ev, activePointerId);
+        final int index = MotionEventCompat.findPointerIndex(ev, activePointerId);
         if (index < 0) {
             return -1;
         }
-        return android.support.v4.view.MotionEventCompat.getY(ev, index);
+        return MotionEventCompat.getY(ev, index);
     }
 
     @Override
@@ -745,7 +800,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
         // scrolling, ignore this request so that the vertical scroll event
         // isn't stolen
         if ((android.os.Build.VERSION.SDK_INT < 21 && mTarget instanceof AbsListView)
-                || (mTarget != null && !android.support.v4.view.ViewCompat.isNestedScrollingEnabled(mTarget))) {
+                || (mTarget != null && !ViewCompat.isNestedScrollingEnabled(mTarget))) {
             // Nope.
         } else {
             super.requestDisallowInterceptTouchEvent(b);
@@ -757,7 +812,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
         return isEnabled() && canChildScrollUp() && !mReturningToStart && !mRefreshing
-                && (nestedScrollAxes & android.support.v4.view.ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
+                && (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
     }
 
     @Override
@@ -765,7 +820,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
         // Reset the counter of how much leftover scroll needs to be consumed.
         mNestedScrollingParentHelper.onNestedScrollAccepted(child, target, axes);
         // Dispatch up to the nested parent
-        startNestedScroll(axes & android.support.v4.view.ViewCompat.SCROLL_AXIS_VERTICAL);
+        startNestedScroll(axes & ViewCompat.SCROLL_AXIS_VERTICAL);
         mTotalUnconsumed = 0;
         mNestedScrollInProgress = true;
     }
@@ -927,8 +982,8 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
             mCircleView.setVisibility(View.VISIBLE);
         }
         if (!mScale) {
-            android.support.v4.view.ViewCompat.setScaleX(mCircleView, 1f);
-            android.support.v4.view.ViewCompat.setScaleY(mCircleView, 1f);
+            ViewCompat.setScaleX(mCircleView, 1f);
+            ViewCompat.setScaleY(mCircleView, 1f);
         }
 
         if (mScale) {
@@ -968,12 +1023,51 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
                     if (mListener != null) {
                         mListener.onRefresh();
                     }
+                    if (headViewProvider != null) {
+                        headViewProvider.onProgressChange(mHeadViewHolder, 1, 1);
+                    }
+                }
+            });
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    Float value = (Float) valueAnimator.getAnimatedValue();
+                    mHeadViewHeight = (int) value.floatValue();
+                    Log.i("xxx", "" + mHeadViewHeight);
+                    mHeadView.layout(0, 0, mHeadView.getMeasuredWidth(), mHeadViewHeight);
+//                    mHeadView.setLayoutParams(mHeadView.getLayoutParams());
+                    mHeadView.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth() - getPaddingLeft() - getPaddingRight(), MeasureSpec.EXACTLY),
+                            MeasureSpec.makeMeasureSpec(mHeadViewHeight, MeasureSpec.EXACTLY));
+                    mHeadView.layout(0, 0, mHeadView.getMeasuredWidth(), mHeadViewHeight);
+                    if (headViewProvider != null) {
+                        headViewProvider.onProgressChange(mHeadViewHolder, value / mTotalDragDistance, 1);
+                    }
                 }
             });
             animator.start();
         } else {
-            //// TODO: 2017/1/16 0016 开始刷新
-            mTarget.animate().translationY(0).setDuration(SCALE_DOWN_DURATION).start();
+            //// TODO: 2017/1/16 0016 没有触发刷新
+//            mTarget.animate().translationY(0).setDuration(SCALE_DOWN_DURATION).start();
+            ObjectAnimator animator = ObjectAnimator.ofFloat(mTarget, "translationY", 0)
+                    .setDuration(SCALE_DOWN_DURATION);
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    Float value = (Float) valueAnimator.getAnimatedValue();
+                    mHeadViewHeight = (int) value.floatValue();
+                    mHeadView.layout(0, 0, mHeadView.getMeasuredWidth(), mHeadViewHeight);
+//                    mHeadView.setLayoutParams(mHeadView.getLayoutParams());
+                    mHeadView.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth() - getPaddingLeft() - getPaddingRight(), MeasureSpec.EXACTLY),
+                            MeasureSpec.makeMeasureSpec(mHeadViewHeight, MeasureSpec.EXACTLY));
+                    mHeadView.layout(0, 0, mHeadView.getMeasuredWidth(), mHeadViewHeight);
+                    if (headViewProvider != null) {
+                        headViewProvider.onProgressChange(mHeadViewHolder, value/mTotalDragDistance, 0);
+                    }
+                }
+            });
+            animator.start();
+
+
             // cancel refresh
             mRefreshing = false;
             mProgress.setStartEndTrim(0f, 0f);
@@ -1005,7 +1099,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        final int action = android.support.v4.view.MotionEventCompat.getActionMasked(ev);
+        final int action = MotionEventCompat.getActionMasked(ev);
         int pointerIndex = -1;
 
         if (mReturningToStart && action == MotionEvent.ACTION_DOWN) {
@@ -1019,23 +1113,33 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                mActivePointerId = android.support.v4.view.MotionEventCompat.getPointerId(ev, 0);
+                mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
                 mIsBeingDragged = false;
                 break;
 
             case MotionEvent.ACTION_MOVE: {
-                pointerIndex = android.support.v4.view.MotionEventCompat.findPointerIndex(ev, mActivePointerId);
+                pointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
                 if (pointerIndex < 0) {
                     Log.e(LOG_TAG, "Got ACTION_MOVE event but have an invalid active pointer id.");
                     return false;
                 }
 
-                final float y = android.support.v4.view.MotionEventCompat.getY(ev, pointerIndex);
+                final float y = MotionEventCompat.getY(ev, pointerIndex);
                 //记录手指移动的距离,mInitialMotionY是初始的位置，DRAG_RATE是拖拽因子，默认为0.5。
 //                Log.i("xxx", "" + y + " , " + mInitialMotionY + " , " + mInitialTargetOffset);
                 final float overscrollTop = (y - mInitialMotionY) * DRAG_RATE + mInitialTargetOffset;
                 //赋值给mTarget的top使之产生拖动效果 todo 1行
-                mTarget.setTranslationY(overscrollTop);
+                int headViewHeight = (int) overscrollTop;
+                if (headViewHeight < 0) {
+                    headViewHeight = 0;
+                }
+                mHeadViewHeight = headViewHeight;
+                mTarget.setTranslationY(mHeadViewHeight);
+//                mHeadView.setLayoutParams(mHeadView.getLayoutParams());
+                mHeadView.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth() - getPaddingLeft() - getPaddingRight(), MeasureSpec.EXACTLY),
+                        MeasureSpec.makeMeasureSpec(mHeadViewHeight, MeasureSpec.EXACTLY));
+                mHeadView.layout(0, 0, mHeadView.getMeasuredWidth(), mHeadViewHeight);
+
 
                 //判断是否需要取消刷新
                 if (mRefreshing) {
@@ -1043,6 +1147,9 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
                     if (mListener != null) {
                         mListener.onCancel();
                     }
+                }
+                if (headViewProvider != null) {
+                    headViewProvider.onProgressChange(mHeadViewHolder, overscrollTop / mTotalDragDistance, 0);
                 }
 
                 if (mIsBeingDragged) {
@@ -1054,30 +1161,30 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
                 }
                 break;
             }
-            case android.support.v4.view.MotionEventCompat.ACTION_POINTER_DOWN: {
-                pointerIndex = android.support.v4.view.MotionEventCompat.getActionIndex(ev);
+            case MotionEventCompat.ACTION_POINTER_DOWN: {
+                pointerIndex = MotionEventCompat.getActionIndex(ev);
                 if (pointerIndex < 0) {
                     Log.e(LOG_TAG, "Got ACTION_POINTER_DOWN event but have an invalid action index.");
                     return false;
                 }
-                mActivePointerId = android.support.v4.view.MotionEventCompat.getPointerId(ev, pointerIndex);
+                mActivePointerId = MotionEventCompat.getPointerId(ev, pointerIndex);
                 break;
             }
 
-            case android.support.v4.view.MotionEventCompat.ACTION_POINTER_UP:
+            case MotionEventCompat.ACTION_POINTER_UP:
                 onSecondaryPointerUp(ev);
                 break;
 
             case MotionEvent.ACTION_UP: {
 //                手指松开时启动动画回到头部 TODO 1行
 
-                pointerIndex = android.support.v4.view.MotionEventCompat.findPointerIndex(ev, mActivePointerId);
+                pointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
                 if (pointerIndex < 0) {
                     Log.e(LOG_TAG, "Got ACTION_UP event but don't have an active pointer id.");
                     return false;
                 }
 
-                final float y = android.support.v4.view.MotionEventCompat.getY(ev, pointerIndex);
+                final float y = MotionEventCompat.getY(ev, pointerIndex);
                 final float overscrollTop = (y - mInitialMotionY) * DRAG_RATE;
                 mIsBeingDragged = false;
                 finishSpinner(overscrollTop);
@@ -1157,7 +1264,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
         if (isAlphaUsedForScale()) {
             mStartingScale = mProgress.getAlpha();
         } else {
-            mStartingScale = android.support.v4.view.ViewCompat.getScaleX(mCircleView);
+            mStartingScale = ViewCompat.getScaleX(mCircleView);
         }
         mScaleDownToStartAnimation = new Animation() {
             @Override
@@ -1185,13 +1292,13 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
 
     private void onSecondaryPointerUp(MotionEvent ev) {
-        final int pointerIndex = android.support.v4.view.MotionEventCompat.getActionIndex(ev);
-        final int pointerId = android.support.v4.view.MotionEventCompat.getPointerId(ev, pointerIndex);
+        final int pointerIndex = MotionEventCompat.getActionIndex(ev);
+        final int pointerId = MotionEventCompat.getPointerId(ev, pointerIndex);
         if (pointerId == mActivePointerId) {
             // This was our active pointer going up. Choose a new
             // active pointer and adjust accordingly.
             final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
-            mActivePointerId = android.support.v4.view.MotionEventCompat.getPointerId(ev, newPointerIndex);
+            mActivePointerId = MotionEventCompat.getPointerId(ev, newPointerIndex);
         }
     }
 
