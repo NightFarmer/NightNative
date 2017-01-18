@@ -95,7 +95,10 @@ export default class MessagelistPage extends Component {
     });
     return (
       <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
-        <TopBar {...this.props} />
+        <TopBar {...this.props} title='消息列表'
+          rightButtonText='新增'
+          onRighButtonPress={() => { } }
+          />
         <ScrollView
           style={styles.scrollview}
           refreshControl={
