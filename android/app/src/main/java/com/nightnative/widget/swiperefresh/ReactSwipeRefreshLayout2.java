@@ -9,11 +9,12 @@ import android.view.MotionEvent;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.uimanager.PixelUtil;
 import com.facebook.react.uimanager.events.NativeGestureUtil;
+import com.nightfarmer.lightrefreshlayout.LightRefreshLayout;
 
 /**
- * Basic extension of {@link SwipeRefreshLayout} with ReactNative-specific functionality.
+ * Basic extension of {@link LightRefreshLayout} with ReactNative-specific functionality.
  */
-public class ReactSwipeRefreshLayout2 extends SwipeRefreshLayout {
+public class ReactSwipeRefreshLayout2 extends LightRefreshLayout {
 
     private static final float DEFAULT_CIRCLE_TARGET = 64;
 

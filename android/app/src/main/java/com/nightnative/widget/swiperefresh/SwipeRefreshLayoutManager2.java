@@ -9,6 +9,7 @@ import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.ViewProps;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.nightfarmer.lightrefreshlayout.LightRefreshLayout;
 
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class SwipeRefreshLayoutManager2 extends ViewGroupManager<ReactSwipeRefre
     @Override
     protected ReactSwipeRefreshLayout2 createViewInstance(ThemedReactContext reactContext) {
         ReactSwipeRefreshLayout2 reactSwipeRefreshLayout2 = new ReactSwipeRefreshLayout2(reactContext);
-        reactSwipeRefreshLayout2.setHeadViewProvider(new MySwipeRefreshHead());
+//        reactSwipeRefreshLayout2.setHeadViewProvider(new MySwipeRefreshHead());
         return reactSwipeRefreshLayout2;
     }
 
@@ -59,7 +60,7 @@ public class SwipeRefreshLayoutManager2 extends ViewGroupManager<ReactSwipeRefre
         view.setProgressBackgroundColorSchemeColor(color);
     }
 
-    @ReactProp(name = "size", defaultInt = SwipeRefreshLayout.DEFAULT)
+    @ReactProp(name = "size", defaultInt = LightRefreshLayout.DEFAULT)
     public void setSize(ReactSwipeRefreshLayout2 view, int size) {
         view.setSize(size);
     }
@@ -79,7 +80,7 @@ public class SwipeRefreshLayoutManager2 extends ViewGroupManager<ReactSwipeRefre
             final ThemedReactContext reactContext,
             final ReactSwipeRefreshLayout2 view) {
         view.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
+                new LightRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onCancel() {
 

@@ -6,11 +6,14 @@ import {
 } from 'react-native';
 
 import SplashPage from './SplashPage'
-import MLP from './function/MessageListPage4'
+import MLP from './function/MessageListPage'
 
 export default class App extends Component {
 
     initialRoute = {
+        params: {
+            title: 'login',
+        },
         title: 'login',
         component: MLP
     }

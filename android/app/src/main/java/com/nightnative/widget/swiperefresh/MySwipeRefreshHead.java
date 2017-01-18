@@ -6,13 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.nightfarmer.lightrefreshlayout.LightRefreshHeadProvider;
 import com.nightnative.R;
 
 /**
  * Created by zhangfan on 2017/1/17 0017.
  */
 
-public class MySwipeRefreshHead implements SwipeRefreshHeadProvider<MySwipeRefreshHead.HeadViewHolder> {
+public class MySwipeRefreshHead implements LightRefreshHeadProvider<MySwipeRefreshHead.HeadViewHolder> {
 
 
     @Override
@@ -41,7 +42,7 @@ public class MySwipeRefreshHead implements SwipeRefreshHeadProvider<MySwipeRefre
         }
     }
 
-    class HeadViewHolder extends SwipeRefreshHeadProvider.HeadViewHolder {
+    class HeadViewHolder extends LightRefreshHeadProvider.HeadViewHolder {
         TextView tv_label;
 
         HeadViewHolder(View headView) {
