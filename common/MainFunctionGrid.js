@@ -11,6 +11,9 @@ import {
 import DraggableGridView from './main/DraggableGridView'
 import MessageListPage from './function/MessageListPage'
 import FileChoosePage from './function/FileChoosePage'
+import Map1 from './function/WebViewTestPage'
+import Map2 from './function/WebViewTestPage2'
+import Map3 from './function/WebViewTestPage3'
 
 let iconSize = Dimensions.get('window').width / 3 / 2.5
 
@@ -51,6 +54,15 @@ export default class MainFunctionGrid extends Component {
         if (index % 2 == 0) {
             comp = FileChoosePage
         }
+        if (index == 3) {
+            comp = Map1
+        }
+        if (index == 4) {
+            comp = Map2
+        }
+        if (index == 5) {
+            comp = Map3
+        }
         return (
             <TouchableOpacity
                 style={{
@@ -79,7 +91,7 @@ export default class MainFunctionGrid extends Component {
                     <Image style={myStyles.icon}
                         source={require('./resource/img/func1.png')} />
                     <Text key={itemData} style={myStyles.text} >
-                        功能{itemData}-{index%2}
+                        功能{itemData}-{index % 2}
                     </Text>
                 </View>
             </TouchableOpacity>
