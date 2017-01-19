@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 import SplashPage from './SplashPage'
-import MLP from './function/ShowLocalFilePage'
+import MLP from './MainPage'
 
 export default class App extends Component {
 

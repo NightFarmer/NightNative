@@ -10,6 +10,7 @@ import {
 
 import DraggableGridView from './main/DraggableGridView'
 import MessageListPage from './function/MessageListPage'
+import FileChoosePage from './function/FileChoosePage'
 
 let iconSize = Dimensions.get('window').width / 3 / 2.5
 
@@ -25,7 +26,7 @@ export default class MainFunctionGrid extends Component {
         return (
             <DraggableGridView
                 ref="dgv"
-                renderItem={() => this.renderItem()}
+                renderItem={this.renderItem.bind(this)}
                 dataList={this.getDataList()}
                 {...this.props}
                 >
@@ -46,6 +47,10 @@ export default class MainFunctionGrid extends Component {
     }
 
     renderItem(itemData, index) {
+        let comp = MessageListPage
+        if (index % 2 == 0) {
+            comp = FileChoosePage
+        }
         return (
             <TouchableOpacity
                 style={{
@@ -56,7 +61,7 @@ export default class MainFunctionGrid extends Component {
                     console.info('onclick..' + itemData)
                     this.resetGridViewTouchState("aa")
                     this.props.navigator.push({
-                        component: MessageListPage,
+                        component: comp,
                         params: {
                             title: '测试'
                         }
@@ -74,7 +79,7 @@ export default class MainFunctionGrid extends Component {
                     <Image style={myStyles.icon}
                         source={require('./resource/img/func1.png')} />
                     <Text key={itemData} style={myStyles.text} >
-                        功能{itemData}
+                        功能{itemData}-{index%2}
                     </Text>
                 </View>
             </TouchableOpacity>

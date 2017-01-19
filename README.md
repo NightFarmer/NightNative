@@ -12,3 +12,6 @@ vim<br/>
 ## 使用到的库
 - 本地文件系统支持
 https://github.com/johanneslumpe/react-native-fs
+
+- 打开本地文件
+https://github.com/huangzuizui/react-native-file-opener

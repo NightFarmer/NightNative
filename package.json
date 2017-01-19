@@ -10,6 +10,7 @@
     "lodash": "^4.17.4",
     "react": "15.4.1",
     "react-native": "0.39.2",
+    "react-native-file-opener": "^0.2.0",
     "react-native-fs": "^2.1.0-rc.1",
     "react-native-pull": "^1.1.3"
   },
