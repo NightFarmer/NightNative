@@ -4,6 +4,7 @@ import {
     View,
     StyleSheet,
     TouchableOpacity,
+    TouchableHighlight,
     Image,
     Dimensions,
 } from 'react-native';
@@ -64,7 +65,8 @@ export default class MainFunctionGrid extends Component {
             comp = Map3
         }
         return (
-            <TouchableOpacity
+            <TouchableHighlight
+                underlayColor={'#EEE'}
                 style={{
                     flex: 1,
                     justifyContent: 'center'
@@ -94,7 +96,7 @@ export default class MainFunctionGrid extends Component {
                         功能{itemData}-{index % 2}
                     </Text>
                 </View>
-            </TouchableOpacity>
+            </TouchableHighlight>
         )
     }
 }

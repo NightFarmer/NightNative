@@ -62,7 +62,7 @@ export default class MainFunctionGrid extends Component {
                         height: this.calcListHeight()
                     }}
                     >
-                    {this.renderCells()}
+                    {[].concat(this.renderCellsBoder(), this.renderCells())}
                 </View>
             </ScrollView>
         );
@@ -71,6 +71,25 @@ export default class MainFunctionGrid extends Component {
     calcListHeight() {
         let listHeight = Math.ceil(this.state.dataList.length / 3) * boxSize
         return listHeight
+    }
+
+    renderCellsBoder() {
+        return this.state.dataList.map((d) => {
+            return (
+                <View
+                    style={[myStyles.box, {
+                        borderBottomWidth: StyleSheet.hairlineWidth,
+                        borderRightWidth: StyleSheet.hairlineWidth,
+                        borderBottomColor: '#ccc',
+                        borderRightColor: '#ccc',
+                        marginLeft: d.marginLeftStatic,
+                        marginTop: d.marginTopStatic
+                    }]}
+                    key={"border_"+d.data}
+                    >
+                </View>
+            )
+        })
     }
 
     renderCells() {

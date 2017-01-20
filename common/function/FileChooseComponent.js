@@ -8,6 +8,8 @@ import {
     ListView,
     Image,
     Navigator,
+    TouchableHighlight,
+    StyleSheet,
 } from 'react-native';
 
 import FileUtils from './FileUtils'
@@ -144,22 +146,25 @@ class Row extends Component {
             fileTypeImage = FileUtils.getIcon(this.props.data.name)
         }
         return (
-            <TouchableOpacity
+            <TouchableHighlight
+                underlayColor='#EEE'
                 onPress={() => {
                     this.props.onClick(this.props.data)
                 } }
                 style={{ flex: 1, height: 60, justifyContent: 'center' }}>
-                <View style={{ flex: 1, padding: 10, flexDirection: 'row', alignItems: 'center' }}>
-                    <Image style={{ width: 35, height: 35, marginRight: 10 }} source={fileTypeImage} />
-                    <View style={{ flex: 1 }}>
-                        <Text>
-                            {this.props.data.name}
-                        </Text>
+                <View style={{ flex: 1 }}>
+                    <View style={{ flex: 1, padding: 10, flexDirection: 'row', alignItems: 'center' }}>
+                        <Image style={{ width: 35, height: 35, marginRight: 10 }} source={fileTypeImage} />
+                        <View style={{ flex: 1 }}>
+                            <Text>
+                                {this.props.data.name}
+                            </Text>
+                        </View>
+                        {rightArrow}
                     </View>
-                    {rightArrow}
+                    <View style={{ backgroundColor: '#D2D2D2', height: StyleSheet.hairlineWidth, marginLeft: 10, marginRight: 10 }} />
                 </View>
-                <View style={{ backgroundColor: '#D2D2D2', height: 1, marginLeft: 10, marginRight: 10 }} />
-            </TouchableOpacity>
+            </TouchableHighlight >
         )
     }
 }
