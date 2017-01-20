@@ -5,4 +5,7 @@ project(':react-native-fs').projectDir = new File(rootProject.projectDir, '../no
 include ':react-native-file-opener'
 project(':react-native-file-opener').projectDir = new File(settingsDir, '../node_modules/react-native-file-opener/android')
 
+include ':react-native-smart-swipe-refresh-layout'
+project(':react-native-smart-swipe-refresh-layout').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-smart-pull-to-refresh-listview/android')
+
 include ':app'
