@@ -15,3 +15,10 @@ https://github.com/johanneslumpe/react-native-fs
 
 - 打开本地文件
 https://github.com/huangzuizui/react-native-file-opener
+
+- 下拉刷新列表组件
+https://github.com/react-native-component/react-native-smart-pull-to-refresh-listview
+
+- 高德地图
+https://github.com/NightFarmer/react-native-smart-amap
+

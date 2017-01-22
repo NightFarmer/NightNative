@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.fileopener.FileOpenerPackage;
+import com.reactnativecomponent.amap.RCTAMapPackage;
+import com.reactnativecomponent.amaplocation.RCTAMapLocationPackage;
 import com.rnfs.RNFSPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -27,8 +29,10 @@ public class MainApplication extends Application implements ReactApplication {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
                     new RNFSPackage(),
-                    new FileOpenerPackage(), //
+                    new FileOpenerPackage(),
                     new RCTSwipeRefreshLayoutPackage(),
+                    new RCTAMapPackage(),
+                    new RCTAMapLocationPackage(),
                     new MyExReactPackage()
             );
         }

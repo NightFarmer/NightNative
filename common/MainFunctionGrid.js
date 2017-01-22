@@ -15,6 +15,8 @@ import FileChoosePage from './function/FileChoosePage'
 import Map1 from './function/WebViewTestPage'
 import Map2 from './function/WebViewTestPage2'
 import Map3 from './function/WebViewTestPage3'
+import AmapDemo from './function/AmapDemo'
+
 
 let iconSize = Dimensions.get('window').width / 3 / 2.5
 
@@ -63,6 +65,9 @@ export default class MainFunctionGrid extends Component {
         }
         if (index == 5) {
             comp = Map3
+        }
+        if (index == 6) {
+            comp = AmapDemo
         }
         return (
             <TouchableHighlight
