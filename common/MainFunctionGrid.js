@@ -16,6 +16,10 @@ import Map1 from './function/WebViewTestPage'
 import Map2 from './function/WebViewTestPage2'
 import Map3 from './function/WebViewTestPage3'
 import AmapDemo from './function/AmapDemo'
+import CameraDemo from './function/CameraDemo'
+import CameraDemo2 from './function/CameraDemo2'
+import CameraDemo3 from './function/CameraDemo3'
+import QRCodeDemo from './function/QRCodeDemo'
 
 
 let iconSize = Dimensions.get('window').width / 3 / 2.5
@@ -47,7 +51,12 @@ export default class MainFunctionGrid extends Component {
             { title: '地图测试1', component: Map1 },
             { title: '地图测试2', component: Map2 },
             { title: '地图测试3', component: Map3 },
-            { title: '高德测试', component: AmapDemo }
+            { title: '高德测试', component: AmapDemo },
+            { title: '拍照测试', component: CameraDemo },
+            { title: '拍照测试2', component: CameraDemo2 },
+            { title: '拍照测试3', component: CameraDemo3 },
+            { title: '二维码生成', component: QRCodeDemo },
+            
         ]
         for (let i = 0; i < 20; i++) {
             initList.push({ title: "" + i })

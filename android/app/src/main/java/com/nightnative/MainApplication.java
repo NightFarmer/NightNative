@@ -3,7 +3,10 @@ package com.nightnative;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.imagepicker.ImagePickerPackage;
+import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.fileopener.FileOpenerPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.reactnativecomponent.amap.RCTAMapPackage;
 import com.reactnativecomponent.amaplocation.RCTAMapLocationPackage;
 import com.rnfs.RNFSPackage;
@@ -28,6 +31,9 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new ImagePickerPackage(),
+            new RCTCameraPackage(),
+            new PickerPackage(),
                     new RNFSPackage(),
                     new FileOpenerPackage(),
                     new RCTSwipeRefreshLayoutPackage(),

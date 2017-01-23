@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     
+    <uses-permission android:name="android.permission.CAMERA"/>
 
  <!--*************************高德地图-定位所需要权限*************************-->
     <!-- Normal Permissions 不需要运行时注册 -->
