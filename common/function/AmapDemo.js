@@ -57,7 +57,7 @@ class AMapDemo extends Component {
         //console.log(`amap-alone render...`)
         return (
             <View style={{ flex: 1, backgroundColor: '#FFF' }}>
-                <TopBar {...this.props} title='文件选择'
+                <TopBar {...this.props} title='地图定位取点'
                     // rightButtonText='新增'
                     // onRighButtonPress={() => { } }
                     />
@@ -82,7 +82,7 @@ class AMapDemo extends Component {
                         }}
                         onLayout={this._onLayout}
                         onDidMoveByUser={this._onDidMoveByUser}
-                        onMoveShouldSetResponder={()=>true}
+                        onMoveShouldSetResponder={() => true}
                         onResponderTerminationRequest={() => false}
                         />
                     <Button
@@ -171,19 +171,19 @@ class AMapDemo extends Component {
         }
         else {
             // if (result.formattedAddress) {
-            console.log(`map-格式化地址 = ${result.formattedAddress}`)
-            this.setState({ result: JSON.stringify(result) })
+            // console.log(`map-格式化地址 = ${result.formattedAddress}`)
+            // this.setState({ result: JSON.stringify(result) })
             // }
             // else {
             //     console.log(`map-纬度 = ${result.coordinate.latitude}, map-经度 = ${result.coordinate.longitude}`)
-            //     this._coordinate = {
-            //         latitude: result.coordinate.latitude,
-            //         longitude: result.coordinate.longitude,
-            //     }
+            this._coordinate = {
+                latitude: result.coordinate.latitude,
+                longitude: result.coordinate.longitude,
+            }
             //     this._amap.setOptions({
             //         zoomLevel: 18.1,
             //     })
-            //     this._amap.setCenterCoordinate(this._coordinate)
+            this._amap.setCenterCoordinate(this._coordinate)
             // }
         }
     }

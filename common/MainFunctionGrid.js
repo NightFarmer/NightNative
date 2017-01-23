@@ -41,9 +41,16 @@ export default class MainFunctionGrid extends Component {
     }
 
     getDataList() {
-        let initList = []
+        let initList = [
+            { title: '列表刷新', component: MessageListPage },
+            { title: '文件选择', component: FileChoosePage },
+            { title: '地图测试1', component: Map1 },
+            { title: '地图测试2', component: Map2 },
+            { title: '地图测试3', component: Map3 },
+            { title: '高德测试', component: AmapDemo }
+        ]
         for (let i = 0; i < 20; i++) {
-            initList.push(i)
+            initList.push({ title: "" + i })
         }
         return initList
     }
@@ -54,20 +61,8 @@ export default class MainFunctionGrid extends Component {
 
     renderItem(itemData, index) {
         let comp = MessageListPage
-        if (index % 2 == 0) {
-            comp = FileChoosePage
-        }
-        if (index == 3) {
-            comp = Map1
-        }
-        if (index == 4) {
-            comp = Map2
-        }
-        if (index == 5) {
-            comp = Map3
-        }
-        if (index == 6) {
-            comp = AmapDemo
+        if (itemData.component) {
+            comp = itemData.component
         }
         return (
             <TouchableHighlight
@@ -97,8 +92,9 @@ export default class MainFunctionGrid extends Component {
                     >
                     <Image style={myStyles.icon}
                         source={require('./resource/img/func1.png')} />
-                    <Text key={itemData} style={myStyles.text} >
-                        功能{itemData}-{index % 2}
+                    <Text key={index} style={myStyles.text} >
+                        {itemData.title ? itemData.title : '功能{itemData.title}-{index % 2}'}
+
                     </Text>
                 </View>
             </TouchableHighlight>
@@ -109,8 +105,8 @@ export default class MainFunctionGrid extends Component {
 const myStyles = StyleSheet.create({
     text: {
         color: "#656565",
-        fontSize: 16,
-        marginTop: 5
+        fontSize: 14,
+        marginTop: 10
     },
     icon: {
         width: iconSize,

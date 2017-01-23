@@ -74,18 +74,18 @@ export default class MainFunctionGrid extends Component {
     }
 
     renderCellsBoder() {
-        return this.state.dataList.map((d) => {
+        return this.state.dataList.map((d, index) => {
             return (
                 <View
                     style={[myStyles.box, {
                         borderBottomWidth: StyleSheet.hairlineWidth,
                         borderRightWidth: StyleSheet.hairlineWidth,
-                        borderBottomColor: '#ccc',
-                        borderRightColor: '#ccc',
+                        borderBottomColor: '#E1E1E1',
+                        borderRightColor: '#E1E1E1',
                         marginLeft: d.marginLeftStatic,
                         marginTop: d.marginTopStatic
                     }]}
-                    key={"border_"+d.data}
+                    key={"border_" + index}
                     >
                 </View>
             )
@@ -93,7 +93,7 @@ export default class MainFunctionGrid extends Component {
     }
 
     renderCells() {
-        return this.state.dataList.map((d) => {
+        return this.state.dataList.map((d, index) => {
             return (
                 <Animated.View
                     ref={(v) => { d.viewRef = v } }
@@ -102,7 +102,7 @@ export default class MainFunctionGrid extends Component {
                         marginLeft: d.marginLeft,
                         marginTop: d.marginTop
                     }]}
-                    key={d.data}
+                    key={index}
                     {...this.newPanResponder(d).panHandlers}
                     >
                     {this.props.renderItem(d.data, d.index)}

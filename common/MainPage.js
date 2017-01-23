@@ -17,8 +17,9 @@ import FunctionList from './FunctionList'
 import AboutMe from './AboutMe'
 import BackAndroidHelper from './android/BackAndroidHelper'
 
-
-let iconSize = 30
+//82X102
+let iconWidth = 24.6//20.5
+let iconHeight = 30.6//25.5
 let windowWidth = Dimensions.get('window').width
 
 export default class MainPage extends Component {
@@ -35,7 +36,7 @@ export default class MainPage extends Component {
         this.state = {
             scrollEnabled: true,
             resetMainPageState: false,
-            titleStr: "标题0",
+            titleStr: this.itemList[0],
             currentPageIndex: 0,
         }
         console.info(this.props.navigator.getCurrentRoutes().length)
@@ -87,7 +88,7 @@ export default class MainPage extends Component {
                         onPageSelected={(event) => {
                             let index = event.nativeEvent.position
                             if (this.state.currentPageIndex != index) {
-                                this.setState({ titleStr: "标题" + index, currentPageIndex: index });
+                                this.setState({ titleStr: this.itemList[index], currentPageIndex: index });
                             }
                         } }
                         >
@@ -110,7 +111,7 @@ export default class MainPage extends Component {
                             let x = Math.round((offset % windowWidth) / windowWidth)
                             let index = p + x
                             if (this.state.currentPageIndex != index) {
-                                this.setState({ titleStr: "标题" + (p + x), currentPageIndex: index });
+                                this.setState({ titleStr: this.itemList[p + x], currentPageIndex: index });
                             }
                         } }
                         showsHorizontalScrollIndicator={false}
@@ -136,6 +137,7 @@ export default class MainPage extends Component {
     }
 
     _renderPagerViews() {
+        let am = new AboutMe()
         return ([
             <MainFunctionGrid
                 resetState={this.state.resetMainPageState}
@@ -156,7 +158,7 @@ export default class MainPage extends Component {
                 />,
             <ContactsList key={1} style={mainStyles.pageView} />,
             <FunctionList key={2} style={mainStyles.pageView} />,
-            <AboutMe key={3} style={mainStyles.pageView} />
+            am.render()
         ])
     }
 
@@ -166,7 +168,7 @@ export default class MainPage extends Component {
                 key={index}
                 onPress={() => {
                     if (this.state.currentPageIndex != index) {
-                        this.setState({ titleStr: "标题" + index, currentPageIndex: index });
+                        this.setState({ titleStr: this.itemList[index], currentPageIndex: index });
                     }
                     if (Platform.OS == 'android') {
                         this.refs.viewPager.setPage(index)
@@ -183,13 +185,26 @@ export default class MainPage extends Component {
                     }}
                     >
                     <Image style={mainStyles.icon}
-                        source={require('./resource/img/func1.png')} />
+                        source={this.getItemButtonIcon(index)} />
                     <Text style={mainStyles.iconLabel} >
                         {text}
                     </Text>
                 </View>
             </TouchableOpacity>
         )
+    }
+
+    getItemButtonIcon(index) {
+        switch (index) {
+            case 0:
+                return require('./resource/img/iconmain/main_home0.png')
+            case 1:
+                return require('./resource/img/iconmain/main_contacts_0.png')
+            case 2:
+                return require('./resource/img/iconmain/main_function0.png')
+            case 3:
+                return require('./resource/img/iconmain/main_me0.png')
+        }
     }
 
     componentWillMount() {
@@ -210,12 +225,12 @@ const mainStyles = StyleSheet.create({
         width: windowWidth
     },
     icon: {
-        width: iconSize,
-        height: iconSize
+        width: iconWidth,
+        height: iconHeight
     },
     iconLabel: {
         marginTop: 2,
-        fontSize: 15,
+        fontSize: 12,
         color: '#999999',
         //#38ADFF
     }

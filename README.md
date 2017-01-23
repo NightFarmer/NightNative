@@ -22,3 +22,6 @@ https://github.com/react-native-component/react-native-smart-pull-to-refresh-lis
 - 高德地图
 https://github.com/NightFarmer/react-native-smart-amap
 
+- 高德定位
+https://github.com/react-native-component/react-native-smart-amap-location
+

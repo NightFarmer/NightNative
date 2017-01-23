@@ -19,7 +19,9 @@ export default class FunctionList extends Component {
             <View
                 style={[this.props.style, styles.container]}
                 >
-
+<Text>
+    2
+</Text>
             </View>
         )
     }
@@ -27,6 +29,6 @@ export default class FunctionList extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#A25F2588",
+        // backgroundColor: "#A25F2588",
     }
 })

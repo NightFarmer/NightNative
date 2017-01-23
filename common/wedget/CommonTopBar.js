@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         color: "#FFFFFF"
     },
     backIcon: {
-        width: 11,
-        height: 19.8,
+        width: 9.9,
+        height: 17.82,
     }
 })
