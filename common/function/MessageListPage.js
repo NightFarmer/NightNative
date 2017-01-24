@@ -17,8 +17,9 @@ import TopBar from '../wedget/CommonTopBar'
 
 import PullToRefreshListView from 'react-native-smart-pull-to-refresh-listview'
 
+import TimerEnhance from 'react-native-smart-timer-enhance'
 
-export default class MessagelistPage extends Component {
+class MessagelistPage extends Component {
 
   constructor(props) {
     super(props);
@@ -91,7 +92,7 @@ export default class MessagelistPage extends Component {
     return (
       <TouchableHighlight
         underlayColor='#EEE'
-        onPress={()=>{}}
+        onPress={() => { } }
         style={styles.thumbnail}>
         <View style={styles.textContainer}>
           <Text>{rowData.text}</Text>
@@ -174,7 +175,7 @@ export default class MessagelistPage extends Component {
     //console.log('outside _onRefresh start...')
 
     //simulate request data
-    setTimeout(() => {
+    this.setTimeout(() => {
 
       //console.log('outside _onRefresh end...')
       let addNum = 20
@@ -197,7 +198,7 @@ export default class MessagelistPage extends Component {
   _onLoadMore = () => {
     //console.log('outside _onLoadMore start...')
 
-    setTimeout(() => {
+    this.setTimeout(() => {
 
       //console.log('outside _onLoadMore end...')
 
@@ -297,7 +298,7 @@ const styles = StyleSheet.create({
   }
 })
 
-
+export default TimerEnhance(MessagelistPage)
 
 
 
