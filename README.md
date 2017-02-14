@@ -20,7 +20,8 @@ https://github.com/huangzuizui/react-native-file-opener
 https://github.com/react-native-component/react-native-smart-pull-to-refresh-listview
 
 - 高德地图 √
-https://github.com/NightFarmer/react-native-smart-amap
+https://github.com/NightFarmer/react-native-smart-amap<br/>
+npm install react-native-smart-map@https://github.com/NightFarmer/react-native-smart-amap.git --save
 
 - 高德定位 √
 https://github.com/react-native-component/react-native-smart-amap-location
@@ -49,3 +50,6 @@ https://github.com/chenchunyong/react-native-barCode
 - 分享
 
 - 手势缩放图片，这个打算纯RN实现，顺便尝试使用ImageEditor来裁剪图片
+
+## 链接
+react-native link
